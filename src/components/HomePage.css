@@ -1,0 +1,482 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #fff;
+  color: #333;
+}
+
+
+/* ================= Floating Header ================= */
+.header {
+  display: flex;
+  justify-content: space-between; /* logo left, menu center, user right */
+  align-items: center;
+  width: 80%;                      /* not full width, floating card */
+  background: #fff;                 /* white background */
+  border: 1px solid #e0e0e0;        /* light border */
+  border-radius: 2px;              /* rounded card effect */
+  padding: 15px 30px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+
+  position: absolute;               /* float in middle */
+  top: 7%;                         /* vertical center */
+  left: 50%;                        /* horizontal center */
+  transform: translate(-50%, -50%); /* center alignment */
+  z-index: 1000;
+}
+
+/* Logo */
+.header .logo img {
+  height: 50px;
+  width: 150px;
+  size: 20px;
+}
+
+/* Navbar menu */
+.header nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.header nav ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.header nav ul li {
+  position: relative;
+  font-size: 15px;
+  font-weight: 500;
+  color: #8a1538;   /* dark maroon like screenshot */
+  cursor: pointer;
+}
+
+/* Active & hover underline */
+.header nav ul li::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 3px;
+  background-color: #8a1538;
+  left: 0;
+  bottom: -5px;
+  transition: 0.3s;
+}
+.header nav ul li:hover::after,
+.header nav ul li.active::after {
+  width: 100%;
+}
+
+/* Right side icons + user */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-left: 1px solid #ccc;
+  padding-left: 15px;
+}
+
+.bell-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.user {
+  font-weight: 500;
+  color: #333;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.logout-btn {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+
+/* ================= Hero Section ================= */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #3fbac2;
+  padding: 60px 80px;
+  position: relative;
+}
+
+.hero-left {
+  max-width: 500px;
+  color: #fff;
+}
+
+.hero-left h1 {
+  font-size: 42px;
+  font-weight: bold;
+  line-height: 1.3;
+}
+
+.hero-left .highlight {
+  color: #ff9500;
+}
+
+.hero-left p {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  margin-top: 25px;
+}
+
+
+.btn-primary {
+  background: #8fd3d6;
+  color: #000;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.btn-secondary {
+  background: transparent;
+  color:black;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Hero Right */
+.hero-right {
+  position: relative;
+  top: 65px;
+  right: 70px;
+}
+
+.hero-right img {
+  width: 400px;
+  border-radius: 10px;
+  bottom: 300px;
+
+}
+
+.floating-card {
+  position: absolute;
+  background: #fff;
+  color: #000;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+}
+
+.card-top {
+  top: 40px;
+  right: -80px;
+}
+
+.card-middle {
+  bottom: 120px;
+  right: -90px;
+}
+
+.card-middle span {
+  display: block;
+  font-size: 12px;
+  color: #555;
+}
+
+.card-bottom {
+  bottom: 20px;
+  left: -100px;
+}
+
+.card-bottom span {
+  display: block;
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.join-btn {
+  background: #e0466b;
+  color: #fff;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* ================= Stats ================= */
+.stats-section {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  padding: 60px 20px;
+  background: #0e4e72;
+  color: #fff;
+  min-height: 200px;
+}
+
+.stat-box h2 {
+  font-size: 36px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.stat-box p {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* ================= Services ================= */
+.services-section {
+  text-align: center;
+  padding: 60px 20px;
+  background: #0e4e72;
+  color: #fff;
+  min-height: 250px;
+}
+
+.section-subtitle {
+  font-size: 40px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #4f46e5, #22c55e);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.section-desc {
+  margin-top: 10px;
+  font-size: 15px;
+  max-width: 600px;
+  margin: 10px auto 0;
+  color: #d1d5db;
+}
+
+.services-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.service-card {
+  background: #fff;
+  color: #000;
+  padding: 25px;
+  border-radius: 12px;
+  width: 280px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+/* Service Icons */
+.icon-circle {
+  background: #3fbac2;    /* background color */
+  color: #fff;            /* icon color */
+  font-size: 32px;        /* increase icon size */
+  width: 70px;            /* fixed circle width */
+  height: 70px;           /* fixed circle height */
+  border-radius: 50%;     /* make it a circle */
+  display: flex;          /* flexbox for centering */
+  justify-content: center; 
+  align-items: center;    /* perfectly center icon */
+  margin: 0 auto 15px;    /* center horizontally & add spacing below */
+}
+
+
+/* ================= Testimonials ================= */
+.testimonials-section {
+  display: flex;
+  justify-content: space-between;
+  padding: 60px 80px;
+  align-items: center;
+  gap: 40px;
+  background: #0e4e72;
+  color: #fff;
+  min-height: 250px;
+  flex-wrap: wrap;
+
+}
+
+.testimonial-left {
+  flex: 1;
+}
+.testimonial-left p {
+  width: 300px;
+}
+
+.testimonial-left h5 {
+  font-size: 13px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.testimonial-left h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.assessment {
+  font-weight: 500;
+}
+
+.testimonial-right {
+  flex: 1;
+  position: relative;
+
+}
+.testimonial-right img{
+  width: 300px;
+  height: 350px;
+}
+
+.testimonial-img {
+  width: 200px;
+  height: 100px ;
+  border-radius: 12px;
+}
+
+.testimonial-card {
+  background: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 12px;
+  position: absolute;
+  bottom: -40px;
+  left: 160px;
+  width: 280px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.stars {
+  color: #fbbf24;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+/* ================= Footer ================= */
+/* ================= Footer ================= */
+.footer {
+  background: #161a36; /* dark navy */
+  color: #fff;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 15px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;   /* fix inside alignment */
+  gap: 10px;
+}
+
+
+
+.footer-logo {
+  height: 40px;
+  width: auto;
+  width: 100px;
+  top: 300px;
+}
+
+.footer-top span {
+  font-size: 16px;
+  font-weight: 600;
+  border-left: 1px solid #444;
+  padding-left: 15px;
+}
+
+.footer-newsletter h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.newsletter-form input {
+  padding: 12px 15px;
+  border-radius: 30px;
+  border: 1px solid #444;
+  width: 280px;
+  outline: none;
+}
+
+.newsletter-form button {
+  padding: 12px 25px;
+  border-radius: 30px;
+  border: none;
+  background: #38c9d6; /* cyan button */
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.newsletter-form button:hover {
+  background: #2ca6b1;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin: 30px 0 15px;
+}
+
+.footer-links a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-links a:hover {
+  color: #38c9d6;
+}
+
+.footer-bottom p {
+  font-size: 13px;
+  color: #888;
+}
