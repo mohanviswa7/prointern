@@ -15,7 +15,7 @@ export default function HomePage() {
        
     <div>
       {/* ================= navbar================= */}
-      <header className="header">
+      {/* <header className="header">
         <div className="logo">
           <img src={logo} alt="ProIntern Logo" />
         </div>
@@ -39,7 +39,7 @@ export default function HomePage() {
             ⏻
           </button>
         </div>
-      </header>
+      </header> */}
 
       {/* ================= Hero Section ================= */}
       <section className="hero">
