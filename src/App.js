@@ -14,7 +14,7 @@ import {
 } from "./components/ToastMessage"; // ✅ centralized toasts
 
 import Home from "./pages/home";
-import Internship from "./pages/internship";
+import Internship from "./pages/internship/internship.jsx";
 import Courses from "./pages/Courses";
 import CompetitiveExam from "./pages/CompetitiveExam";
 import PlacementAssistance from "./pages/PlacementAssistance";
@@ -135,6 +135,7 @@ function App() {
         <Route path="/placement-assistance" element={<PlacementAssistance />} />
         <Route path="/certification" element={<Certification />} />
         <Route path="/login" element={<Login />} />
+        
       </Routes>
 
       {/* ✅ Centralized Toast Container */}
