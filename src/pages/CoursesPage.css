@@ -1,0 +1,291 @@
+/* Copied from earlier conversion */ 
+.container {
+  background-color: #146B8A;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+}
+
+/* Navbar */
+.navbarContainer {
+  background-color: #fff;
+  padding: 5px 10px;
+  margin: 10px;
+  border-radius: 8px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.logoText {
+  font-size: 20px;
+  font-weight: bold;
+  color: #003B59;
+  flex: 1;
+}
+
+.navMenu {
+  display: flex;
+  justify-content: space-around;
+  flex: 3;
+  gap: 15px;
+}
+
+.navText {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+}
+
+.activeNav {
+  color: #b30059;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  gap: 10px;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.logoutBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Layout */
+.mainContent {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 20px;
+}
+
+.leftContent {
+  flex: 3;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rightContent {
+  flex: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Course Selection */
+.courseSelectionBox {
+  width: 520px;
+  height: 210px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4.38px;
+  padding: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.courseRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.centeredRow {
+  justify-content: center;
+  position: relative;
+}
+
+.courseCard {
+  background-color: #FFF6F9;
+  padding: 8px;
+  border-radius: 4.38px;
+  width: 153.96px;
+  height: 45.67px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.courseCard.selected {
+  background-color: #A85775;
+}
+
+.iconContainer {
+  width: 17.52px;
+  height: 17.81px;
+  border-radius: 3.19px;
+  background-color: #F0F0F0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 8px;
+  border: 0.32px solid #A85775;
+}
+
+.iconContainer.selectedIcon {
+  border-color: #fff;
+}
+
+.courseIcon {
+  width: 15px;
+  height: 15px;
+}
+
+.courseTextContainer {
+  flex: 1;
+}
+
+.courseTitle {
+  font-size: 11.19px;
+  font-weight: 900;
+  color: #A85775;
+  margin-bottom: 2px;
+}
+
+.courseDesc {
+  font-size: 9px;
+  color: #666;
+  line-height: 11px;
+}
+
+.selectedText {
+  color: #fff !important;
+}
+
+/* Type Buttons (Paid/Unpaid) */
+.typeButton {
+  background-color: #FFF6F9;
+  padding: 8px;
+  border-radius: 4.38px;
+  width: 153.96px;
+  height: 46.35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.typeButton.selectedType {
+  background-color: #A85775;
+}
+
+.typeIconContainer {
+  width: 17.52px;
+  height: 17.81px;
+  border-radius: 3.19px;
+  background-color: #F0F0F0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 8px;
+  border: 0.32px solid #A85775;
+}
+
+.typeIconContainer.selectedIcon {
+  border-color: #fff;
+}
+
+.typeIcon {
+  width: 15px;
+  height: 15px;
+}
+
+.typeText {
+  font-size: 11.19px;
+  font-weight: 900;
+  color: #A85775;
+}
+
+/* Submit Button */
+.submitButton {
+  background-color: #54C5CD;
+  padding: 8px;
+  border-radius: 20px;
+  width: 123px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.submitButton.disabled {
+  background-color: #AAAAAA;
+  cursor: not-allowed;
+}
+
+/* Info Section */
+.infoBox {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #FFD93D;
+  margin-bottom: 10px;
+}
+
+.unpaidTitle {
+  margin-top: 20px;
+}
+
+.point {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 5px;
+  line-height: 18px;
+}
+
+/* Right Side Images */
+.imageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.circleImage {
+  width: 270px;
+  height: 270px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: -40px;
+}
+
+.personImage {
+  width: 360px;
+  height: 260px;
+  margin-top: -30px;
+  position: relative;
+}
+
+

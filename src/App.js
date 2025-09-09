@@ -15,7 +15,9 @@ import {
 
 import Home from "./pages/home";
 import Internship from "./pages/internship/internship.jsx";
-import Courses from "./pages/Courses";
+import Courses from "./pages/Courses.jsx";
+import PaidCourses from "./pages/CoursePaid.jsx";
+import UnpaidCourses from "./pages/CourseUnpaid.jsx";
 import CompetitiveExam from "./pages/CompetitiveExam";
 import PlacementAssistance from "./pages/PlacementAssistance";
 import Certification from "./pages/Certification";
@@ -131,6 +133,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/internship" element={<Internship />} />
         <Route path="/courses" element={<Courses />} />
+        <Route path="/paid-courses" element={<PaidCourses />} />
+        <Route path="/unpaid-courses" element={<UnpaidCourses />} /> 
         <Route path="/competitive-exam" element={<CompetitiveExam />} />
         <Route path="/placement-assistance" element={<PlacementAssistance />} />
         <Route path="/certification" element={<Certification />} />
