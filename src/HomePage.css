@@ -1,0 +1,409 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.home-wrapper{
+    background-color: #0d4374;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  left: 100px;
+  right:100px;
+}
+
+.logo {
+  height: 40px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links li {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-pic {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.username {
+  font-weight: 500;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px 200px;
+  background: #38b6b4;
+  color: #fff;
+  overflow: hidden;
+}
+
+.hero-text {
+  max-width: 500px;
+}
+
+.hero-text h1 {
+  font-size: 42px;
+  line-height: 1.3;
+}
+
+.highlight {
+  color: orange;
+}
+
+.hero-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.btn-primary {
+  background: #fff;
+  color: #333;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid #fff;
+  padding: 12px 25px;
+  border-radius: 25px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Right side image + floating cards */
+.hero-right {
+  position: relative;
+}
+
+.hero-girl {
+  height: 400px;
+  z-index: 1;
+  position: relative;
+}
+
+.card {
+  position: absolute;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-size: 14px;
+}
+/* Floating Cards Container */
+.floating-card1 {
+  position: absolute;
+  top: 100px;
+  right: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  z-index: 2;
+}
+.floating-card2 {
+  position: absolute;
+  top: 180px;
+  right: -100px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  z-index: 2;
+}
+
+.floating-card3 {
+  position: absolute;
+  top: 220px;
+  right: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  z-index: 2;
+}
+
+/* Floating Cards Base */
+.float-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  width: 240px;
+  transition: transform 0.3s ease;
+}
+
+.float-card:hover {
+  transform: translateY(-10px);
+}
+
+.float-card h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color:#333;
+}
+
+.float-card p {
+  font-size: 13px;
+  opacity: 0.8;
+  margin: 0;
+  color:#333;
+}
+
+/* Icon Styles */
+.float-card .icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #fff;
+}
+
+.icon.blue {
+  background: #38b6b4;
+}
+
+.icon.orange {
+  background: #ff9800;
+}
+
+/* User Experience Class Card */
+.class-card {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.class-card .mini-pic {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.join-btn {
+  margin-top: 6px;
+  padding: 6px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #e91e63;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+
+/* Floating positions */
+.stat-card {
+  top: 30px;
+  right: -40px;
+}
+
+.congrat-card {
+  top: 140px;
+  right: -90px;
+}
+
+.class-card {
+  bottom: -40px;
+  left: -60px;
+}
+
+.mini-pic {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.join-btn {
+  background: #e91e63;
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+/* Wave */
+.hero-wave {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  line-height: 10px;
+}
+
+/* Stats Section */
+.stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 40px 20px;
+  background: #0d4374;
+  color: #fff;
+}
+
+.stats h2 {
+  font-size: 28px;
+}
+
+.stats p {
+  opacity: 0.8;
+}
+
+/* Services */
+.services {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 80px 0;
+  background-color:#0d4374;
+}
+
+.service-card {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 60px 30px 30px; /* extra top padding for icon */
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+}
+
+.icon-wrapper {
+  position: absolute;
+  top: -55px;              /* move higher above card */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: -150px;           /* bigger circle */
+  border-radius: 50%;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.icon-wrapper img {
+  width: 100px;             /* icon size */
+  height: 100px;
+  object-fit: contain;
+}
+
+
+
+/* Testimonial */
+.testimonial {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 60px 40px;
+  background: #0d4374;
+  color: #f8f8ff;
+}
+
+.testimonial-text {
+  max-width: 400px;
+}
+.testimonial-text p {
+  line-height: 1.8;   /* Adjust this value for more/less gap */
+}
+
+.testimonial-box {
+  background: #fff;
+  color: #333;
+  padding: 15px;
+  border-radius: 20px;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  bottom:200px;
+  left:100%;
+}
+
+.testimonial-img {
+  width: 300px;
+  right:600px;
+  left:500px;
+}
+
+/* Footer */
+.footer {
+  background: #222;
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.newsletter {
+  margin-bottom: 20px;
+}
+
+.newsletter input {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  margin-right: 10px;
+  width: 220px;
+}
+
+.newsletter button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #38b6b4;
+  color: #fff;
+  cursor: pointer;
+}
+
+.footer-links {
+  margin: 15px 0;
+  opacity: 0.7;
+}

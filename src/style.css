@@ -1,0 +1,769 @@
+/* Container */
+.signup-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #fdfbfb, #ebedee);
+  font-family: Arial, sans-serif;
+}
+
+/* Card */
+.signup-card {
+  background: #ffffff;
+  padding: 2rem;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Logo */
+.signup-logo {
+  width: 150px;
+  margin-bottom: 30px;
+}
+
+/* Title */
+.signup-card h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Labels */
+.signup-card label {
+  display: block;
+  text-align: left;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #444;
+}
+
+/* Inputs */
+.signup-card input {
+  width: 94%;
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  outline: none;
+}
+
+.signup-card input:focus {
+  border: 1px solid #FF8C00;
+}
+
+/* Input with icon */
+.input-with-icon {
+  display: flex;
+  align-items: center;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  padding: 0 10px;
+}
+
+.input-with-icon input {
+  width: 85%;
+  border: none;
+  flex: 1;
+  outline: none;
+  padding: 10px;
+}
+
+.icon {
+  margin-right: 6px;
+}
+
+/* Button */
+.signup-btn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 12px;
+  background: #FF8C00;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.signup-btn:hover {
+  background:#FF8C00;
+}
+
+/* Login text */
+.login-text {
+  margin-top: 1 rem;
+  font-size: 14px;
+}
+
+.login-text a {
+  color:#FF8C00;
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+}
+
+/* Verify Email Page */
+.verify-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  font-family: Arial, sans-serif;
+}
+
+.verify-card {
+  background: #fff;
+  padding: 2rem;
+  width: 350px;
+  border-radius: 12px;
+  text-align: center;
+  position: relative;
+}
+
+.verify-card h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.verify-card p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.back-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.otp-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.otp-input {
+  width: 45px;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+  margin: 0 6px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  outline: none;
+}
+
+.otp-input:focus {
+  border: 2px solid #FF8C00;
+}
+
+.resend-text {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.resend-link {
+  color: #FF8C00;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.timer {
+  font-size: 13px;
+  color: #FF8C00;
+  margin-top: 5px;
+}
+
+.dashboard {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px;
+  background: #e5f6f9;
+}
+.hero-content {
+  max-width: 50%;
+}
+.hero-content h1 {
+  font-size: 36px;
+}
+.hero-content span {
+  color: #f97316;
+}
+.hero-buttons {
+  margin-top: 20px;
+}
+.btn-primary {
+  background: #007bff;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.btn-outline {
+  background: transparent;
+  border: 2px solid #007bff;
+  color: #007bff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.hero-image img {
+  max-width: 400px;
+}
+
+/* Stats Section */
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px 20px;
+  background: #0c6e91;
+  color: #fff;
+}
+.stats h2 {
+  font-size: 28px;
+  margin: 0;
+}
+
+/* Services Section */
+.services {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 50px 20px;
+}
+.service-card {
+  flex: 1;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* Testimonials */
+.testimonials {
+  padding: 50px 20px;
+  text-align: center;
+}
+.testimonial-card {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background: #f3f3f3;
+}
+.testimonial-card img {
+  width: 100px;
+  border-radius: 50%;
+}
+.author {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Footer */
+.footer {
+  background: #0c2435;
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+}
+.footer .newsletter {
+  margin-bottom: 20px;
+}
+.footer input {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  margin-right: 10px;
+}
+.footer a {
+  color: #fff;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+
+/* Role Cards */
+.role-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.role-card {
+  background-color: #2e2e2e;
+  border-radius: 12px;
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.role-card:hover {
+  transform: translateY(-5px);
+}
+
+.role-card.selected {
+  background-color: #fce4ec;
+  color: #000;
+}
+
+.role-icon {
+  color: #999;
+}
+
+.role-card.selected .role-icon {
+  color: #c62828;
+}
+
+.role-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.role-desc {
+  font-size: 13px;
+  margin-top: 6px;
+  color: #aaa;
+}
+
+/* Buttons */
+.action-buttons {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 200px;
+}
+
+.proceed-btn {
+  background-color: #db4437;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.proceed-btn:hover {
+  background-color: #db4437;
+}
+
+.logout-btn {
+  background-color: #db4437;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #e53935;
+}
+
+
+/* Google Login Button */
+.google-btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background: #db4437;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.google-btn:hover {
+  background: #c23321;
+}
+
+.google-icon {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.forgot-link {
+  font-size: 13px;
+  color: #FF8C00;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* Modal Background */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Card */
+.modal-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 320px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* forgot password */
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.modal-card h3 {
+  margin-bottom: 10px;
+}
+
+.modal-card p {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.modal-card input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+}
+
+.modal-card .signup-btn {
+  width: 100%;
+  padding: 12px;
+  background: #FF8C00;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Card */
+.modal-card {
+  background: #fff;
+  padding: 1.5rem;
+  width: 320px;
+  border-radius: 12px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.modal-card h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.modal-card p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+/* Reset Password Page */
+.reset-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.reset-card {
+  background: #fff;
+  padding: 2rem;
+  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  text-align: center;
+  position: relative;
+}
+
+.reset-card h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.reset-card label {
+  display: block;
+  text-align: left;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #444;
+}
+
+.reset-card input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  outline: none;
+  margin-bottom: 15px;
+}
+
+.reset-card input:focus {
+  border: 1px solid #FF8C00;
+}
+
+.reset-card .signup-btn {
+  width: 100%;
+  padding: 12px;
+  background: #FF8C00;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.reset-card .signup-btn:hover {
+  background: #e67e00;
+}
+
+/* password reset*/
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  width: 300px;
+  position: relative;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+.modal-card h3 {
+  margin-bottom: 10px;
+}
+
+.modal-card p {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links li a:hover {
+  color: #007bff;
+}
+
+.certificate-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  background: #f9fafb;
+  padding: 20px;
+}
+
+.certificate-wrapper {
+  text-align: center;
+}
+
+.certificate-card {
+  position: relative;
+  width: 1000px;   /* match your certificate width */
+  height: auto;
+}
+
+.certificate-bg {
+  width: 100%;
+  height: auto;
+  border: 2px solid #1e3a8a;
+  border-radius: 8px;
+}
+
+/* Overlay text */
+.certificate-text {
+  position: absolute;
+  font-family: "Times New Roman", serif;
+  color: #000;
+  font-weight: bold;
+}
+
+/* Adjust these positions based on template */
+.name {
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 26px;
+}
+
+.course {
+  top: 280px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  color: #1e3a8a;
+}
+
+.dates {
+  top: 330px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+}
+
+.issue {
+  bottom: 80px;
+  left: 150px;
+  font-size: 14px;
+}
+
+.id {
+  bottom: 80px;
+  left: 450px;
+  font-size: 14px;
+}
+
+/* Button */
+.download-btn {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #1e3a8a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.download-btn:hover {
+  background: #3b82f6;
+}
+

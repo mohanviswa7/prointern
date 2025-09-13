@@ -1,0 +1,176 @@
+.certificate-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.certificate-container {
+  position: relative;
+  width: 1021px;  /* match exact certificate size */
+  height: 595px;
+}
+
+.certificate-bg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.certificate-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1021px;
+  height: 595px;
+  font-family: "Times New Roman", serif;
+  color: #000;
+  text-align: center;
+}
+
+/* ============ HEADINGS ============ */
+.cert-title {
+  position: absolute;
+  top: 100px;
+  width: 100%;
+  font-size: 45px;
+  font-weight: bold;
+}
+
+.cert-subtitle {
+  position: absolute;
+  top: 150px;
+  width: 100%;
+  font-size: 30px;
+  color: #003399;
+  letter-spacing: 2px;
+}
+
+/* Stars image */
+.stars {
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+}
+
+/* ============ BODY CONTENT ============ */
+.cert-intro {
+  position: absolute;
+  top: 230px;
+  width: 100%;
+  font-size: 20px;
+}
+
+.cert-name {
+  position: absolute;
+  top: 260px;
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.cert-body {
+  position: absolute;
+  top: 290px;
+  left: 80px;
+  width: 860px;
+  font-size: 22px;
+  line-height: 1.4;
+}
+
+.cert-body2 {
+  position: absolute;
+  top: 320px;
+  left: 80px;
+  width: 860px;
+  font-size: 22px;
+  line-height: 1.4;
+}
+
+.cert-course {
+  position: absolute;
+  top: 370px;
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  color: #003399;
+}
+
+.cert-desc {
+  position: absolute;
+  top: 400px;
+  left: 80px;
+  width: 860px;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.cert-des {
+  position: absolute;
+  top: 420px;
+  left: 80px;
+  width: 860px;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+/* ============ FOOTER ============ */
+.cert-issue-date {
+  position: absolute;
+  bottom: 0px;
+  left: 170px;
+  font-size: 20px;
+}
+.cert-issue-line {
+  position: absolute;
+  bottom: -10px;
+  left: 140px;
+  font-size: 16px;
+  color:gold;
+}
+
+.cert-issue {
+  position: absolute;
+  bottom: -40px;
+  left: 170px;
+  font-size: 20px;
+}
+
+.cert-serial {
+  position: absolute;
+  bottom: -70px;
+  left: 60px;
+  font-size: 18px;
+}
+
+/* ============ STAMP & SIGN ============ */
+.stamp {
+  position: absolute;
+  bottom: 10px;
+  left: 640px;
+  width: 90px;
+}
+
+.cert-sign-line {
+  position: absolute;
+  bottom: -10px;
+  left: 520px;
+  font-size: 16px;
+  color:gold;
+}
+
+.sign {
+  position: absolute;
+  bottom: 25px;
+  right: 380px;
+  width: 90px;
+}
+
+.cert-sign {
+  position: absolute;
+  bottom: -40px;
+  left: 600px;
+  font-size: 20px;
+}
+

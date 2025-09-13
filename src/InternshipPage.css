@@ -1,0 +1,151 @@
+/* General */
+.page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #1e3a8a, #2563eb);
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.logo {
+  height: 40px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links li {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-pic {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.username {
+  font-weight: 500;
+}
+
+/* Course Selector */
+.course-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #1e40af;
+  border-radius: 12px;
+}
+.course-card {
+  background: white;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.submit-btn {
+  background: teal;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Main Section */
+.main-section {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 30px;
+  padding: 40px;
+ 
+}
+
+/* Left Side */
+.left-card {
+   background-image: url('./assets/java.png');
+  color: #333;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0px 6px rgba(0,0,0,0.1);
+}
+.left-card h2 {
+  margin-bottom: 20px;
+}
+.lesson {
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* Right Side */
+.right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.content-card {
+  background: white;
+  color: #333;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.progress {
+  font-size: 14px;
+  color: gray;
+  margin-bottom: 15px;
+}
+
+/* Books */
+.books {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.book-card {
+  background: #f3f4f6;
+  text-align: center;
+  padding: 15px;
+  border-radius: 10px;
+}
+.book-card img {
+  height: 70px;
+  margin-bottom: 10px;
+}
+.price {
+  color: green;
+  font-weight: bold;
+}
