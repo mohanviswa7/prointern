@@ -1,0 +1,207 @@
+ *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+        body{
+        background:url('../../assets/internship-assets/bg.png');
+        }
+        /* Navbar Container */
+/* .navbar {
+  display: flex;
+  align-items:center;
+  width: 90%;
+  height: 60px;
+  position: relative;
+  top: 50px;
+  left: 90px;
+  justify-content: space-between;
+  background: white;
+  padding: 10px 30px;
+  
+  
+  font-family: Arial, sans-serif;
+}
+
+/* Logo */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-img {
+  width: 35px;
+  height: 35px;
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #d47c24;
+}
+
+/* Links */
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links li {
+  position: relative;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: #a12b52;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+  color: #d94f6d;
+} */
+
+/* Dropdown */
+/* .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  
+  padding: 10px 0;
+  border-radius: 6px;
+  
+  list-style: none;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  padding: 8px 15px;
+}
+
+.dropdown-menu a {
+  color: #444;
+}
+
+.dropdown-menu a:hover {
+  color: #d94f6d;
+} */
+
+/* Right Side */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon {
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+}
+
+.username {
+  font-weight: 500;
+}
+
+.user-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.internship-dropdown {
+  display: grid;
+  position: absolute;
+  top: 10%;
+  left: 25%;
+  width: 620px;
+  height: 230px;
+  background-color: #f7f7f73a;
+  padding: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+  z-index: 999;
+}
+
+.internship-card {
+  background: #FFF6F9;
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;   /* stack header + paragraph */
+  gap: 5px;
+  color: #a12b52;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  width: 190.9597930908203px;
+  height: 60.66604232788086px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+  
+}
+
+.internship-card:hover {
+  
+  color: #000000;
+  transform: translateY(-3px);
+}
+
+/* Show dropdown on hover */
+.dd{
+  display: grid;
+  
+  
+}
+/* .dropdown:hover .internship-dropdown {
+  display: grid;
+} */
+.dropdown:hover .internship-dropdown{
+  display: grid;
+  visibility: visible;
+  transition: 0.3s ease-in-out;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 2px; /* space between icon and title */
+}
+
+.card-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.para {
+  font-size: 8px;
+  width: 100px;
+  color: #555;
+  margin-left: 32px; /* 🔥 aligns paragraph under title, not under icon */
+  position: relative;
+  left: 20px;
+  
+}
+.nav-btn{
+  width: 150px;
+  height: 40px;
+  border: none;
+  font-size: 15px;
+  border-radius: 20px;
+  color: white ;
+  background-color:#54C5CD;
+ 
+}
+
+.nav-btn:hover{
+  transform: translateY(-3px);
+}
