@@ -1,146 +1,191 @@
 import React, { useState } from "react";
-import axios from "axios";
-import "./ProinternQuiz.css";
+import { jsPDF } from "jspdf";
+import CertificateImage from "../pages/assets/CertificateNew2.jpg"; // Background certificate template
+import ProinternLogo from "../../src/assets/prointern logo.jpg"; // Prointern logo
 
-export default function Certification() {
-  const [questions, setQuestions] = useState([]); // store fetched questions
-  const [answers, setAnswers] = useState({}); // store user answers
-  const [started, setStarted] = useState(false); // quiz start flag
+export default function CertificateGenerator() {
+  const [name, setName] = useState("");
+  const [course, setCourse] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
 
-  // ✅ Fetch questions from backend
-  const fetchQuestions = async () => {
-    try {
-      // 👉 Replace with your backend API
-      const res = await axios.get("http://localhost:5000/api/questions"); // 🔹 API 1: Fetch questions
-      setQuestions(res.data); // assuming backend returns an array of questions
-      setStarted(true);
-    } catch (err) {
-      console.error("Error fetching questions:", err);
+  const handleSubmit = () => {
+    if (!name || !course || !fromDate || !toDate) {
+      alert("Please enter all details before generating certificate!");
+      return;
     }
-  };
 
-  // ✅ Handle answer change
-  const handleAnswerChange = (index, value) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [index]: value.toLowerCase(), // store as lowercase (a/b/c/d)
-    }));
-  };
+    const doc = new jsPDF("landscape", "pt", "a4");
+    const width = doc.internal.pageSize.getWidth();
+    const height = doc.internal.pageSize.getHeight();
 
-  // ✅ Submit answers to backend
-  const handleSubmit = async () => {
-    try {
-      const payload = {
-        answers,
+    const bgImg = new Image();
+    bgImg.src = CertificateImage;
+
+    bgImg.onload = () => {
+      // Add background
+      doc.addImage(bgImg, "JPEG", 0, 0, width, height);
+
+      // Dotted border
+      doc.setLineWidth(1);
+      doc.setDrawColor(73, 187, 189);
+      doc.setLineDash([4, 4], 0);
+      doc.rect(20, 20, width - 40, height - 40);
+
+      // Add Prointern Logo in center-top
+      const logo = new Image();
+      logo.src = ProinternLogo;
+      logo.onload = () => {
+        doc.addImage(logo, "JPEG", width / 2 - 50, 40, 100, 100);
+
+        // Title
+        doc.setTextColor(0, 0, 0);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(32);
+        doc.text("CERTIFICATE OF COMPLETION", width / 2, 180, {
+          align: "center",
+        });
+
+        // Subtitle
+        doc.setFont("helvetica", "italic");
+        doc.setFontSize(16);
+        doc.text("This certificate is proudly presented to", width / 2, 220, {
+          align: "center",
+        });
+
+        // Student Name
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(28);
+        doc.text(name, width / 2, 260, { align: "center" });
+
+        // Course Line
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(16);
+        doc.text(
+          `For successfully completing the Internship Program in the field of`,
+          width / 2,
+          300,
+          { align: "center" }
+        );
+
+        // Course Name
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(20);
+        doc.text(course, width / 2, 330, { align: "center" });
+
+        // Internship Duration
+        doc.setFont("helvetica", "italic");
+        doc.setFontSize(14);
+        doc.text(`Duration: ${fromDate} to ${toDate}`, width / 2, 370, {
+          align: "center",
+        });
+
+        // Footer details
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(12);
+        doc.text(
+          `Issued on: ${new Date().toLocaleDateString()}`,
+          80,
+          height - 80
+        );
+        doc.text("Authorized Signature", width - 180, height - 80);
+        doc.text(
+          "Serial No: PROINT-" + Math.floor(Math.random() * 10000),
+          80,
+          height - 50
+        );
+
+        // Save file
+        doc.save(`${name}_Certificate.pdf`);
       };
-
-      // 👉 Replace with your backend API
-      await axios.post("http://localhost:5000/api/submit", payload); // 🔹 API 2: Submit answers
-      alert("✅ Answers submitted successfully!");
-    } catch (err) {
-      console.error("Error submitting answers:", err);
-      alert("❌ Failed to submit answers!");
-    }
+    };
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white font-sans fade-in">
-      <main className="pt-24">
-        <div className="max-w-6xl mx-auto py-10 px-4 text-center">
-          <h1 className="text-3xl font-bold mb-6">
-            WELCOME TO PROINTERN QUIZ TEST:
-          </h1>
+    <div style={pageWrapper}>
+      <div style={cardStyle}>
+        <h2
+          style={{
+            color: "#333",
+            fontFamily: "sans-serif",
+            fontWeight: "bold",
+            marginBottom: "20px",
+          }}
+        >
+          Generate Your Internship Certificate
+        </h2>
 
-          {/* Quiz Button & Marks */}
-          {!started && (
-            <div className="flex justify-center items-center space-x-6 mb-10">
-              <button
-                onClick={fetchQuestions}
-                className="bg-orange-500 text-white font-bold px-6 py-2 rounded shadow hover:bg-orange-600 bounce"
-              >
-                QUIZ TEST
-              </button>
-              <span className="text-lg font-semibold tracking-wide">
-                Total Marks : 20
-              </span>
-            </div>
-          )}
-
-          {/* Questions Grid */}
-          {started && (
-            <div className="grid grid-cols-3 gap-6 text-left fade-in">
-              {questions.slice(0, 20).map((q, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-800 p-4 rounded-lg shadow transform transition duration-300 
-                            hover:scale-105 hover:bg-purple-700 hover:shadow-lg"
-                >
-                  <h2 className="font-bold mb-2 text-lg">Q{index + 1}:</h2>
-                  <p className="text-sm text-gray-300 italic">{q.question}</p>
-                  <ul className="mt-2 space-y-1 text-sm">
-                    {q.options.map((opt, i) => (
-                      <li key={i}>
-                        {String.fromCharCode(97 + i)}) {opt}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Answer Circles */}
-          {started && (
-            <div className="mt-12">
-              <h2 className="font-semibold mb-4">
-                Write the options for all MCQ’s here :
-              </h2>
-              <div className="grid grid-cols-6 gap-4 max-w-xl mx-auto">
-                {Array.from({ length: 20 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="relative w-12 h-12 flex items-center justify-center"
-                  >
-                    {/* Question Number */}
-                    <span className="absolute -top-2 -left-2 w-5 h-5 flex items-center justify-center rounded-full bg-purple-600 text-white text-xs font-bold">
-                      {index + 1}
-                    </span>
-
-                    {/* Answer Input */}
-                    <input
-                      type="text"
-                      maxLength="1"
-                      value={answers[index] || ""}
-                      onChange={(e) =>
-                        handleAnswerChange(index, e.target.value)
-                      }
-                      className="w-12 h-12 rounded-full border border-gray-400 text-center text-black font-bold focus:ring-2 focus:ring-purple-500 transition"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Submit */}
-          {started && (
-            <div className="mt-8">
-              <button
-                onClick={handleSubmit}
-                className="bg-purple-600 px-6 py-2 rounded text-white font-bold shadow hover:bg-purple-700 hover:scale-105 transition"
-              >
-                SUBMIT
-              </button>
-            </div>
-          )}
-        </div>
-      </main>
+        <input
+          type="text"
+          placeholder="Enter Your Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          style={inputStyle}
+        />
+        <input
+          type="text"
+          placeholder="Enter Course Name"
+          value={course}
+          onChange={(e) => setCourse(e.target.value)}
+          style={inputStyle}
+        />
+        <br />
+        <input
+          type="date"
+          placeholder="From Date"
+          value={fromDate}
+          onChange={(e) => setFromDate(e.target.value)}
+          style={inputStyle}
+        />
+        <input
+          type="date"
+          placeholder="To Date"
+          value={toDate}
+          onChange={(e) => setToDate(e.target.value)}
+          style={inputStyle}
+        />
+        <br />
+        <button onClick={handleSubmit} style={buttonStyle}>
+          Generate Certificate
+        </button>
+      </div>
     </div>
   );
 }
 
+// Styles
+const pageWrapper = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  minHeight: "100vh",
+  background: "linear-gradient(to right, #49BBBD, #1F8A9E)",
+};
 
+const cardStyle = {
+  background: "#fff",
+  padding: "40px",
+  borderRadius: "12px",
+  boxShadow: "0px 8px 20px rgba(0,0,0,0.2)",
+  textAlign: "center",
+  width: "500px",
+};
 
+const inputStyle = {
+  padding: "10px",
+  margin: "10px",
+  width: "80%",
+  border: "1px solid #49BBBD",
+  borderRadius: "5px",
+};
 
-
-
+const buttonStyle = {
+  padding: "12px 30px",
+  background: "#49BBBD",
+  border: "none",
+  borderRadius: "8px",
+  color: "#fff",
+  fontWeight: "600",
+  cursor: "pointer",
+  marginTop: "15px",
+};

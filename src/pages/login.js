@@ -1,70 +1,99 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { gapi } from "gapi-script";
 import "./style.css";
+
+const clientId = "667601110937-lkjld131c8s2rg84s5ekf4i38mbtifjp.apps.googleusercontent.com";
 
 function Login() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
   });
 
-  // 🔹 State for Forgot Password modal
+  // Forgot password state
   const [showForgot, setShowForgot] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientId,
+        scope: "email profile",
+      });
+    }
+    gapi.load("client:auth2", start);
+  }, []);
+
+  const handleGoogleLogin = () => {
+    const auth2 = gapi.auth2.getAuthInstance();
+    auth2.signIn().then((googleUser) => {
+      const profile = googleUser.getBasicProfile();
+      const userData = {
+        name: profile.getName(),
+        email: profile.getEmail(),
+        image: profile.getImageUrl(),
+      };
+
+      // Save user to localStorage
+      localStorage.setItem("isLoggedIn", true);
+      localStorage.setItem("profileName", userData.name);
+      localStorage.setItem("googleUser", JSON.stringify(userData));
+
+      // Redirect
+      navigate("/home", { state: { email: userData.email } });
+    });
   };
+
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.password) {
-      alert("Please enter both email and password");
+    if (!formData.name || !formData.email || !formData.password) {
+      alert("Please enter your name, email and password");
       return;
     }
 
-    console.log("Logged in:", formData);
-
-    // ✅ Save login state
     localStorage.setItem("isLoggedIn", true);
+    localStorage.setItem("profileName", formData.name);
 
-    // ✅ Navigate to /home
     navigate("/home", { state: { email: formData.email } });
   };
 
-  const handleGoogleLogin = () => {
-    alert("Google Sign-in clicked (Integrate OAuth here)");
-  };
-
-  // 🔹 Handle Forgot Password submit
   const handleForgotSubmit = (e) => {
     e.preventDefault();
-
     if (!forgotEmail) {
       alert("Please enter your email");
       return;
     }
-
     setShowForgot(false);
-
-    // ✅ Navigate to Verify Email page instead of Reset
     navigate("/verify", { state: { email: forgotEmail } });
-
   };
 
   return (
     <div className="signup-container">
       <div className="signup-card">
-        {/* Logo */}
         <img src="/logo192.png" alt="ProIntern Logo" className="signup-logo" />
 
         <h2>Welcome Back</h2>
         <p>Login to continue</p>
 
         <form onSubmit={handleSubmit}>
+          <label>Name</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter your name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+
           <label>Email Address</label>
           <input
             type="email"
@@ -86,7 +115,6 @@ function Login() {
           />
 
           <div style={{ textAlign: "right", marginTop: "5px" }}>
-            {/* 🔹 open Forgot Password modal */}
             <span
               className="forgot-link"
               onClick={() => setShowForgot(true)}
@@ -114,7 +142,6 @@ function Login() {
         </p>
       </div>
 
-      {/* 🔹 Forgot Password Modal */}
       {showForgot && (
         <div className="modal-overlay">
           <div className="modal-card">

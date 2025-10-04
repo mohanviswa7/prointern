@@ -1,0 +1,143 @@
+.header.navbar-attractive {
+  width: 90%;
+  max-width: 1200px;
+  margin: 32px auto 0 auto;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  background: #fff;
+  position: relative;
+  z-index: 10;
+  padding: 0;
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32px;
+  min-height: 70px;
+}
+
+.logo img {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+}
+
+nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  position: relative;
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: #1a237e;
+  cursor: pointer;
+  padding: 8px 18px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+nav ul li .dropdown-arrow {
+  margin-left: 6px;
+  font-size: 0.9em;
+  color: #d81e5b;
+}
+
+nav ul li.active,
+nav ul li:hover {
+  background: linear-gradient(90deg, #49BBBD 0%, #d81e5b 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(216,30,91,0.08);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 24px;
+}
+
+.bell-icon {
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.user {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a237e;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e7ff;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #d81e5b;
+  cursor: pointer;
+  transition: color 0.2s;
+  margin-left: 4px;
+}
+.logout-btn:hover {
+  color: #49BBBD;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .header.navbar-attractive {
+    width: 98%;
+    padding: 0;
+  }
+  .navbar-inner {
+    padding: 0 10px;
+  }
+  nav ul {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header.navbar-attractive {
+    width: 100%;
+    border-radius: 0;
+    margin: 0;
+  }
+  .navbar-inner {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0;
+    padding: 0 4px;
+  }
+  nav ul {
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .header-right {
+    margin-left: 0;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 6px;
+  }
+}
