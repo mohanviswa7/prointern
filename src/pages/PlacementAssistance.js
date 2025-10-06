@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Bookmark } from "lucide-react"; 
+import { Bookmark } from "lucide-react";
 
 const containerStyle = {
   backgroundColor: "#146B8A",
@@ -69,19 +69,18 @@ const centerWrapper = {
   gap: "40px",
 };
 
-
 const optionCardContainer = {
   backgroundColor: "#2C4E6C",
   borderRadius: "16px",
   padding: "25px 20px",
   boxShadow: "0 6px 12px rgba(0,0,0,0.25)",
-  height: "100px",
-  width: "200px", 
+  width: "220px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "20px", 
+  gap: "20px",
 };
+
 const optionButton = (active, type) => ({
   backgroundColor:
     type === "Paid"
@@ -94,33 +93,31 @@ const optionButton = (active, type) => ({
   borderRadius: "12px",
   display: "flex",
   alignItems: "center",
-  gap: "15px",
+  gap: "12px",
   fontWeight: "bold",
-  fontSize: "16px", 
+  fontSize: "16px",
   color: "#8b1c3b",
-  padding: "18px 25px",
-  width: "80%",
+  padding: "14px 18px",
+  width: "100%",
   justifyContent: "flex-start",
   cursor: "pointer",
   boxShadow: active
     ? "inset 0 3px 6px rgba(0,0,0,0.15)"
     : "0 3px 6px rgba(0,0,0,0.15)",
   transition: "0.3s ease",
-  minHeight: "9px", 
 });
 
 const iconBox = {
   backgroundColor: "#fff",
   borderRadius: "10px",
-  padding: "10px",
-  width: "8%",
-  height :"50%",
-  boxShadow: "0 4px 6px rgba(255,0,64,0.25)",
+  padding: "6px",
+  width: "36px",
+  height: "36px",
+  boxShadow: "0 2px 4px rgba(0,0,0,0.15)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 };
-
 
 const centerCard = {
   backgroundColor: "#2C4E6C",
@@ -194,11 +191,7 @@ export default function PlacementAssistance() {
             <div>WELCOME TO PROINTERN PAID ASSISTANCE :</div>
             <div style={logosRow}>
               <img src="/images/tcs.png" alt="TCS" style={companyLogoStyle} />
-              <img
-                src="/images/techmahindra.png"
-                alt="Tech Mahindra"
-                style={companyLogoStyle}
-              />
+              <img src="/images/techmahindra.png" alt="Tech Mahindra" style={companyLogoStyle} />
               <img src="/images/hcl.png" alt="HCL Tech" style={companyLogoStyle} />
               <img src="/images/infosys.png" alt="Infosys" style={companyLogoStyle} />
             </div>
@@ -207,15 +200,14 @@ export default function PlacementAssistance() {
 
         {/* Center Column */}
         <div style={centerWrapper}>
-
-          {/*  Toggle card */}
+          {/* Toggle card */}
           <div style={optionCardContainer}>
             <div
               style={optionButton(paidStatus === "Paid", "Paid")}
               onClick={() => handleSelect("Paid")}
             >
               <div style={iconBox}>
-                <Bookmark color="#b3003c" size={24} />
+                <Bookmark color="#b3003c" size={20} />
               </div>
               PAID
             </div>
@@ -225,13 +217,13 @@ export default function PlacementAssistance() {
               onClick={() => handleSelect("Unpaid")}
             >
               <div style={iconBox}>
-                <Bookmark color="#b3003c" size={24} />
+                <Bookmark color="#b3003c" size={20} />
               </div>
               UNPAID
             </div>
           </div>
 
-          {/*   IQ Card */}
+          {/* IQ Card */}
           <div style={centerCard}>
             <img src="/images/iq.png" alt="IQ Test" style={iqImageStyle} />
             <p>You Need to Attend the IQ Test</p>
@@ -241,11 +233,7 @@ export default function PlacementAssistance() {
 
         {/* Right Column */}
         <div style={rightColumn}>
-          <img
-            src="/images/placement.png"
-            alt="Placement Assistance"
-            style={placementBadgeStyle}
-          />
+          <img src="/images/placement.png" alt="Placement Assistance" style={placementBadgeStyle} />
         </div>
       </div>
     </div>

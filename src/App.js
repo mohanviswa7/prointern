@@ -6,6 +6,7 @@ import {
   Link,
   useNavigate,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 
 import {
@@ -22,6 +23,12 @@ import CompetitiveExam from "./pages/CompetitiveExam";
 import PlacementAssistance from "./pages/PlacementAssistance";
 import Certification from "./pages/Certification";
 import Login from "./pages/login";
+import Signup from "./pages/Signup.js"; 
+import VerifyEmail from "./pages/VerifyEmail.js";
+import ResetPassword from "./pages/ResetPassword.js";
+
+
+import ProtectedRoute from "./components/ProtectedRoute"; // ✅ we’ll create this
 
 // ✅ Navbar styles
 const navStyle = {
@@ -61,6 +68,7 @@ function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn"); // clear login state
     AppToasts.logoutSuccess(); // ✅ centralized toast
     navigate("/login");
   };
@@ -70,7 +78,7 @@ function Navbar() {
       <img src="/images/logo.png" alt="Prointern Logo" style={logoStyle} />
 
       <div style={navLinksContainer}>
-        <Link to="/" style={navLinkStyle}>
+        <Link to="/home" style={navLinkStyle}>
           Home
         </Link>
         <Link to="/internship" style={navLinkStyle}>
@@ -92,9 +100,7 @@ function Navbar() {
 
       <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
         <span style={{ fontSize: "20px", cursor: "pointer" }}>🔔</span>
-        <span
-          style={{ fontSize: "14px", fontWeight: "500", color: "#333" }}
-        >
+        <span style={{ fontSize: "14px", fontWeight: "500", color: "#333" }}>
           Profile name
         </span>
         <img
@@ -108,10 +114,7 @@ function Navbar() {
             cursor: "pointer",
           }}
         />
-        <span
-          onClick={handleLogout}
-          style={{ fontSize: "24px", cursor: "pointer" }}
-        >
+        <span onClick={handleLogout} style={{ fontSize: "24px", cursor: "pointer" }}>
           ⏻
         </span>
       </div>
@@ -125,21 +128,87 @@ function App() {
 
   return (
     <>
-      {/* Show Navbar only if NOT on login page */}
-      {location.pathname !== "/login" && <Navbar />}
+      {/* Show Navbar only if NOT on login or signup page */}
+      {location.pathname !== "/login" && location.pathname !== "/signup" && <Navbar />}
 
       <Routes>
-        <Route index element={<Home />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/internship" element={<Internship />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/paid-courses" element={<PaidCourses />} />
-        <Route path="/unpaid-courses" element={<UnpaidCourses />} /> 
-        <Route path="/competitive-exam" element={<CompetitiveExam />} />
-        <Route path="/placement-assistance" element={<PlacementAssistance />} />
-        <Route path="/certification" element={<Certification />} />
+        {/* Redirect `/` → `/signup` */}
+        <Route index element={<Navigate to="/signup" />} />
+
+        {/* Auth Pages */}
+        <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        
+
+        {/* ✅ Protected Routes */}
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/internship"
+          element={
+            <ProtectedRoute>
+              <Internship />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/courses"
+          element={
+            <ProtectedRoute>
+              <Courses />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/paid-courses"
+          element={
+            <ProtectedRoute>
+              <PaidCourses />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/unpaid-courses"
+          element={
+            <ProtectedRoute>
+              <UnpaidCourses />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/competitive-exam"
+          element={
+            <ProtectedRoute>
+              <CompetitiveExam />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/placement-assistance"
+          element={
+            <ProtectedRoute>
+              <PlacementAssistance />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/certification"
+          element={
+            <ProtectedRoute>
+              <Certification />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="/verify" element={<VerifyEmail />} />
+
+        <Route path="/reset" element={<ResetPassword />} />
+
       </Routes>
 
       {/* ✅ Centralized Toast Container */}
