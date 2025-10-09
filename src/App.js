@@ -23,7 +23,6 @@ import Login from "./pages/login";
 import Signup from "./pages/Signup.js";
 import VerifyEmail from "./pages/VerifyEmail.js";
 import ResetPassword from "./pages/ResetPassword.js";
-
 import ProtectedRoute from "./components/ProtectedRoute";
 import TaskScreen from "./pages/Taskscreen.jsx";
 import Hero from "./pages/internship/hero.jsx";
@@ -37,6 +36,8 @@ import CoursesAdmin from "./pages/admin/CoursesAdmin.jsx";
 import InternshipAdmin from "./pages/admin/InternshipAdmin.jsx";
 import CompetetiveAdmin from "./pages/admin/CompetetiveAdmin.jsx";
 import RecruiterForm from "./pages/RecruiterForm.jsx";
+import ProinternLogo from "./assets/prointern logo.jpg";
+import stevan from "./assets/dp.png";
 
 // --- Attractive Full-Width Navbar CSS ---
 const navbarCss = `
@@ -299,8 +300,8 @@ function Navbar({ onSelectInternship }) {
       <header className="header attractive-navbar">
         <div className="attractive-navbar-inner">
           <div className="attractive-navbar-logo">
-            <img src="/images/logo.png" alt="ProIntern Logo" />
-          </div>
+  <img src={ProinternLogo} alt="ProIntern Logo" />
+</div>
 
           <nav className="attractive-navbar-nav">
             <ul>
@@ -351,7 +352,7 @@ function Navbar({ onSelectInternship }) {
             <span className="attractive-navbar-bell">🔔</span>
             <span className="attractive-navbar-user">{profileName}</span>
             <img
-              src="/images/dp.png"
+              src={stevan}
               alt="Profile"
               className="attractive-navbar-avatar"
             />
