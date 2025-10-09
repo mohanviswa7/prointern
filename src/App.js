@@ -1,18 +1,15 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
   useNavigate,
   useLocation,
   Navigate,
+  Link,
 } from "react-router-dom";
 
-import {
-  ToastMessageContainer,
-  AppToasts,
-} from "./components/ToastMessage"; // ✅ centralized toasts
+import { ToastMessageContainer, AppToasts } from "./components/ToastMessage";
 
 import Home from "./pages/home";
 import Internship from "./pages/internship/internship.jsx";
@@ -23,123 +20,401 @@ import CompetitiveExam from "./pages/CompetitiveExam";
 import PlacementAssistance from "./pages/PlacementAssistance";
 import Certification from "./pages/Certification";
 import Login from "./pages/login";
-import Signup from "./pages/Signup.js"; 
+import Signup from "./pages/Signup.js";
 import VerifyEmail from "./pages/VerifyEmail.js";
 import ResetPassword from "./pages/ResetPassword.js";
 
+import ProtectedRoute from "./components/ProtectedRoute";
+import TaskScreen from "./pages/Taskscreen.jsx";
+import Hero from "./pages/internship/hero.jsx";
+import CareersPage from "./pages/Careers.js";
+import PrivacyPolicy from "./pages/PrivacyPolicy.js";
+import TermsAndConditions from "./pages/Termsandconditions.js";
+import MockTestPage from "./pages/MockTestPage";
+import PracticePage from "./pages/PracticePage";
+import PlacementAdmin from "./pages/admin/PlacementAdmin.jsx";
+import CoursesAdmin from "./pages/admin/CoursesAdmin.jsx";
+import InternshipAdmin from "./pages/admin/InternshipAdmin.jsx";
+import CompetetiveAdmin from "./pages/admin/CompetetiveAdmin.jsx";
+import RecruiterForm from "./pages/RecruiterForm.jsx";
 
-import ProtectedRoute from "./components/ProtectedRoute"; // ✅ we’ll create this
+// --- Attractive Full-Width Navbar CSS ---
+const navbarCss = `
+.attractive-navbar {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  background: #fff;
+  position: relative;
+  z-index: 10;
+  padding: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.attractive-navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32px;
+  min-height: 70px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+.attractive-navbar-logo {
+  flex: 0 0 160px;
+  display: flex;
+  justify-content: flex-start;
+}
+.attractive-navbar-logo img {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+}
+.attractive-navbar-nav {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.attractive-navbar-nav ul {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.attractive-navbar-nav ul li {
+  position: relative;
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: #1a237e;
+  cursor: pointer;
+  padding: 8px 18px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+}
+.attractive-navbar-nav ul li .dropdown-arrow {
+  margin-left: 6px;
+  font-size: 0.9em;
+  color: #d81e5b;
+}
+.attractive-navbar-nav ul li.active,
+.attractive-navbar-nav ul li:hover {
+  background: linear-gradient(90deg, #49BBBD 0%, #d81e5b 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(216,30,91,0.08);
+}
+.attractive-navbar-right {
+  flex: 0 0 220px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: flex-end;
+  margin-left: 0;
+}
+.attractive-navbar-bell {
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.attractive-navbar-user {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a237e;
+}
+.attractive-navbar-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e7ff;
+}
+.attractive-navbar-logout {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #d81e5b;
+  cursor: pointer;
+  transition: color 0.2s;
+  margin-left: 4px;
+}
+.attractive-navbar-logout:hover {
+  color: #49BBBD;
+}
+/* Dropdown card */
+.dropdown-card {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  padding: 10px 0;
+  min-width: 150px;
+  display: none;
+  flex-direction: column;
+  z-index: 20;
+}
+.dropdown-card.show {
+  display: flex;
+}
+.dropdown-card button {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  text-align: left;
+  cursor: pointer;
+  font-weight: 500;
+  color: #1a237e;
+}
+.dropdown-card button:hover {
+  background: #f0f0f0;
+  color: #d81e5b;
+}
+@media (max-width: 1200px) {
+  .attractive-navbar-inner {
+    padding: 0 10px;
+    max-width: 100vw;
+  }
+  .attractive-navbar-nav ul {
+    gap: 16px;
+  }
+}
+@media (max-width: 900px) {
+  .attractive-navbar-inner {
+    padding: 0 4px;
+  }
+  .attractive-navbar-nav ul {
+    gap: 10px;
+  }
+}
+@media (max-width: 700px) {
+  .attractive-navbar-inner {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0;
+    padding: 0 2px;
+  }
+  .attractive-navbar-nav ul {
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .attractive-navbar-right {
+    margin-left: 0;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .attractive-navbar-logo {
+    justify-content: center;
+    margin-bottom: 6px;
+  }
+}
+`;
 
-// ✅ Navbar styles
-const navStyle = {
-  backgroundColor: "#fff",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  padding: "0 40px",
-  height: "60px",
-  boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-  fontSize: "14px",
-};
-
-const navLinksContainer = {
-  display: "flex",
-  gap: "30px",
-  alignItems: "center",
-  flexGrow: 1,
-  marginLeft: "40px",
-};
-
-const navLinkStyle = {
-  color: "#d81e5b",
-  textDecoration: "none",
-  fontWeight: "500",
-  fontSize: "14px",
-};
-
-const logoStyle = {
-  width: 175,
-  height: 52,
-  objectFit: "contain",
-};
-
-// ✅ Navbar Component
-function Navbar() {
+// --- Navbar Component ---
+function Navbar({ onSelectInternship }) {
   const navigate = useNavigate();
+  const location = useLocation(); // Access the current location
+  const [active, setActive] = useState("Home");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const hoverTimeoutRef = useRef(null);
+
+  const navOptions = [
+    { label: "Home", path: "/home" },
+    { label: "Internship", path: "/internship" },
+    { label: "Courses", path: "/courses" },
+    { label: "Competitive Exam", path: "/competitive-exam" },
+    { label: "Placement Assistance", path: "/placement-assistance" },
+  ];
+
+  const navOptionsAdmin = [
+    { label: "InternshipAdmin", path: "/internshipadmin" },
+    { label: "Courses Admin", path: "/coursesadmin" },
+    { label: "Competitive Exam Admin", path: "/competetiveadmin" },
+    { label: "Placement Assistance Admin", path: "/placementadmin" },
+    { label: "Certification", path: "/certification" },
+  ];
+
+  // Determine which nav options to use based on the current path
+  const isAdminDashboard = [
+    "/admin-dashboard",
+    "/internshipadmin",
+    "/coursesadmin",
+    "/placementadmin",
+    "/competetiveadmin",
+    "/certification",
+  ].some((path) => location.pathname.startsWith(path));
+  const currentNavOptions = isAdminDashboard ? navOptionsAdmin : navOptions;
+  console.log("Mohan", isAdminDashboard);
+
+  // Ensure Navbar does not switch to default options when on admin routes
+
+  let profileName = localStorage.getItem("profileName") || "User";
+  try {
+    const authUser = JSON.parse(localStorage.getItem("auth_user"));
+    if (authUser && authUser.email) profileName = authUser.email;
+  } catch {}
 
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn"); // clear login state
-    AppToasts.logoutSuccess(); // ✅ centralized toast
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("profileName");
+    localStorage.removeItem("auth_user");
+    AppToasts.logoutSuccess();
     navigate("/login");
   };
 
-  return (
-    <nav style={navStyle}>
-      <img src="/images/logo.png" alt="Prointern Logo" style={logoStyle} />
+  // Hover logic for 10 seconds
+  const handleInternshipHover = (type) => {
+    clearTimeout(hoverTimeoutRef.current);
+    hoverTimeoutRef.current = setTimeout(() => {
+      if (onSelectInternship) onSelectInternship(type);
+      navigate("/internship");
+      setActive("Internship");
+      setShowDropdown(false);
+    }, 10000); // 10 seconds
+  };
 
-      <div style={navLinksContainer}>
-        <Link to="/home" style={navLinkStyle}>
-          Home
-        </Link>
-        <Link to="/internship" style={navLinkStyle}>
-          Internship
-        </Link>
-        <Link to="/courses" style={navLinkStyle}>
-          Courses
-        </Link>
-        <Link to="/competitive-exam" style={navLinkStyle}>
-          Competitive Exam
-        </Link>
-        <Link to="/placement-assistance" style={navLinkStyle}>
-          Placement Assistance
-        </Link>
-        <Link to="/certification" style={navLinkStyle}>
-          Certification
-        </Link>
-      </div>
+  const handleMouseLeave = () => {
+    clearTimeout(hoverTimeoutRef.current);
+    setShowDropdown(false);
+  };
 
-      <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-        <span style={{ fontSize: "20px", cursor: "pointer" }}>🔔</span>
-        <span style={{ fontSize: "14px", fontWeight: "500", color: "#333" }}>
-          Profile name
-        </span>
-        <img
-          src="images/dp.png"
-          alt="Profile"
-          style={{
-            width: "35px",
-            height: "35px",
-            borderRadius: "50%",
-            objectFit: "cover",
-            cursor: "pointer",
-          }}
-        />
-        <span onClick={handleLogout} style={{ fontSize: "24px", cursor: "pointer" }}>
-          ⏻
-        </span>
-      </div>
-    </nav>
-  );
-}
-
-// ✅ App Component
-function App() {
-  const location = useLocation();
+  const handleInternshipClick = (type) => {
+    clearTimeout(hoverTimeoutRef.current);
+    if (onSelectInternship) onSelectInternship(type);
+    navigate("/internship");
+    setActive("Internship");
+    setShowDropdown(false);
+  };
 
   return (
     <>
-      {/* Show Navbar only if NOT on login or signup page */}
-      {location.pathname !== "/login" && location.pathname !== "/signup" && <Navbar />}
+      <style>{navbarCss}</style>
+      <header className="header attractive-navbar">
+        <div className="attractive-navbar-inner">
+          <div className="attractive-navbar-logo">
+            <img src="/images/logo.png" alt="ProIntern Logo" />
+          </div>
+
+          <nav className="attractive-navbar-nav">
+            <ul>
+              {currentNavOptions.map((option) => (
+                <li
+                  key={option.label}
+                  className={active === option.label ? "active" : ""}
+                  onMouseEnter={() => {
+                    if (option.label === "Internship") setShowDropdown(true);
+                  }}
+                  onMouseLeave={handleMouseLeave}
+                  onClick={() => {
+                    if (option.label !== "Internship") {
+                      setActive(option.label);
+                      navigate(option.path);
+                    }
+                  }}
+                >
+                  {option.label}
+                  {option.label === "Internship" && (
+                    <span className="dropdown-arrow">▾</span>
+                  )}
+
+                  {option.label === "Internship" && (
+                    <div
+                      className={`dropdown-card ${showDropdown ? "show" : ""}`}
+                    >
+                      <button
+                        onMouseEnter={() => handleInternshipHover("IT")}
+                        onClick={() => handleInternshipClick("IT")}
+                      >
+                        IT
+                      </button>
+                      <button
+                        onMouseEnter={() => handleInternshipHover("NonIT")}
+                        onClick={() => handleInternshipClick("NonIT")}
+                      >
+                        Non-IT
+                      </button>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="attractive-navbar-right">
+            <span className="attractive-navbar-bell">🔔</span>
+            <span className="attractive-navbar-user">{profileName}</span>
+            <img
+              src="/images/dp.png"
+              alt="Profile"
+              className="attractive-navbar-avatar"
+            />
+            <button className="attractive-navbar-logout" onClick={handleLogout}>
+              ⏻
+            </button>
+          </div>
+        </div>
+      </header>
+    </>
+  );
+}
+
+// --- Admin Dashboard Welcome Component ---
+function AdminDashboardWelcome() {
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1
+        style={{
+          fontWeight: "bold",
+          fontSize: "2rem",
+          color: "orange",
+          animation: "blinker 1.5s linear infinite",
+        }}
+      >
+        Welcome to Admin Dashboard
+      </h1>
+      <p
+        style={{
+          fontWeight: "bold",
+          fontSize: "1.5rem",
+          color: "white",
+          animation: "blinker 1.5s linear infinite",
+        }}
+      >
+        Please Select Any Admin Dashboard in Top
+      </p>
+      <style>
+        {`
+          @keyframes blinker {
+            50% { opacity: 0; }
+          }
+        `}
+      </style>
+    </div>
+  );
+}
+
+// --- App Component ---
+function App() {
+  const location = useLocation();
+  const [internshipScreen, setInternshipScreen] = useState(null);
+
+  return (
+    <>
+      {location.pathname !== "/login" && location.pathname !== "/signup" && (
+        <Navbar onSelectInternship={(option) => setInternshipScreen(option)} />
+      )}
 
       <Routes>
-        {/* Redirect `/` → `/signup` */}
         <Route index element={<Navigate to="/signup" />} />
-
-        {/* Auth Pages */}
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-
-        {/* ✅ Protected Routes */}
         <Route
           path="/home"
           element={
@@ -149,10 +424,36 @@ function App() {
           }
         />
         <Route
+          path="/careers"
+          element={
+            <ProtectedRoute>
+              <CareersPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/privacy"
+          element={
+            <ProtectedRoute>
+              <PrivacyPolicy />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/terms"
+          element={
+            <ProtectedRoute>
+              <TermsAndConditions />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/internship"
           element={
             <ProtectedRoute>
-              <Internship />
+              {internshipScreen === "IT" && <Hero />}
+              {internshipScreen === "NonIT" && <TaskScreen />}
+              {!internshipScreen && <Internship />}
             </ProtectedRoute>
           }
         />
@@ -204,20 +505,30 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route path="/verify" element={<VerifyEmail />} />
-
         <Route path="/reset" element={<ResetPassword />} />
+        <Route path="/mocktest/:examId" element={<MockTestPage />} />
+        <Route path="/practice/:examId" element={<PracticePage />} />
 
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboardWelcome />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/internshipadmin" element={<InternshipAdmin />} />
+        <Route path="/coursesadmin" element={<CoursesAdmin />} />
+        <Route path="/placementadmin" element={<PlacementAdmin />} />
+        <Route path="/competetiveadmin" element={<CompetetiveAdmin />} />
+        <Route path="/recruiter-form" element={<RecruiterForm />} />
       </Routes>
-
-      {/* ✅ Centralized Toast Container */}
       <ToastMessageContainer />
     </>
   );
 }
 
-// ✅ Wrap App with Router
 export default function AppWrapper() {
   return (
     <Router>

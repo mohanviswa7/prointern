@@ -1,0 +1,72 @@
+/* General Styles for Courses Admin Dashboard */
+.courses-admin {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.report-selection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.report-selection button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.report-selection button.active {
+  background-color: #0056b3;
+}
+
+.report-selection button:hover {
+  background-color: #0056b3;
+}
+
+.it-report, .non-it-report {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.courses-table th,
+.courses-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.courses-table th {
+  background-color: #6c757d;
+  color: white;
+  font-weight: bold;
+}
+
+.courses-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.courses-table tr:hover {
+  background-color: #e9ecef;
+}

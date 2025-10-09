@@ -1,59 +1,89 @@
-
-import React from "react";
+import React, { useState } from "react";
 import "./HomePage.css"; // inside HomePage.jsx
-
+import {
+  FaJava,
+  FaPython,
+  FaReact,
+  FaAws,
+  FaShieldAlt,
+  FaBug,
+} from "react-icons/fa";
 import logo from "../assets/prointern logo.jpg";
 import stevan from "../assets/stevan.jpg";
 import Group from "../assets/Mask Group.jpg";
-import prointern from"../assets/prointern.jpg";
+import prointern from "../assets/prointern.jpg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-
- // make sure css is imported
+// make sure css is imported
 
 export default function HomePage() {
+  const [email, setEmail] = useState("");
+
+  const handleWatchClick = () => {
+    toast.info(
+      "We will schedule a free demo. Kindly wait for updates from our team.",
+      {
+        position: "top-center",
+        autoClose: 4000,
+      }
+    );
+  };
+    const handleScheduleClick = () => {
+    toast.info(
+      "We will assign a meet. Kindly wait for updates from our team.",
+      {
+        position: "top-center",
+        autoClose: 4000,
+      }
+    );
+  };
+const handleSubscribeClick = () => {
+    if (!email) {
+      toast.error("Email is required!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return;
+    }
+
+    // Optional: validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return;
+    }
+
+    // Success message
+    toast.success("Subscribed successfully!", {
+      position: "top-center",
+      autoClose: 3000,
+    });
+  };
   return (
-       
     <div>
-      {/* ================= navbar================= */}
-      {/* <header className="header">
-        <div className="logo">
-          <img src={logo} alt="ProIntern Logo" />
-        </div>
-        <nav>
-          <ul>
-           <li>Home</li>
-
-            <li>Internship▾</li>
-            <li>Courses ▾</li>
-            <li>Competitive Exam▾</li>
-            <li>Placement Assistance▾</li>
-            <li>Certification▾</li>
-          </ul>
-        </nav>
-
-        <div className="header-right">
-      <span className="bell-icon">🔔</span>
-          <span className="user">Steven</span>
-          <img src={stevan} alt="Stevan" className="user-avatar" />
-          <button className="logout-btn" aria-label="Logout">
-            ⏻
-          </button>
-        </div>
-      </header> */}
-
+    
       {/* ================= Hero Section ================= */}
       <section className="hero">
         <div className="hero-left">
           <h1>
-            <span className="highlight">Studying</span> Online is now much
-            easier
+            <span className="highlight">Studying</span>{" "}
+            <span className="black-bold">Online is now much easier</span>
           </h1>
-          <p>
-            Prointern is an interesting platform that will teach you in a more
+            <div className="service-card" style={{marginLeft:"600px"}}>
+            <div className="icon-circle">💼</div>
+          
+            <p>
+               Prointern is an interesting platform that will teach you in a more
             interactive way
-          </p>
+            </p>
+          </div>
+         
           <div className="hero-buttons">
-            <button className="btn-primary">Join for free</button>
+            <button className="btn-primary" onClick={handleWatchClick}>Join for free</button>
             <button className="btn-secondary">▶ Watch how it works</button>
           </div>
         </div>
@@ -77,7 +107,7 @@ export default function HomePage() {
           <div className="floating-card card-bottom">
             <p>👩‍🎓 User Experience Class</p>
             <span>Today at 12.00 PM</span>
-            <button className="join-btn">Join Now</button>
+            <button className="join-btn" onClick={handleScheduleClick}>Join Now</button>
           </div>
         </div>
       </section>
@@ -105,6 +135,47 @@ export default function HomePage() {
           <p>Years of experience</p>
         </div>
       </section>
+      <div className="scroll-container">
+        <div className="scroll-content">
+          <div className="course-item">
+            <FaJava className="icon" /> Java
+          </div>
+          <div className="course-item">
+            <FaPython className="icon" /> Python
+          </div>
+          <div className="course-item">
+            <FaReact className="icon" /> ReactJS
+          </div>
+          <div className="course-item">
+            <FaAws className="icon" /> AI&ML
+          </div>
+          <div className="course-item">
+            <FaShieldAlt className="icon" /> DataScience
+          </div>
+          <div className="course-item">
+            <FaBug className="icon" /> Software Testing
+          </div>
+          {/* Duplicate for smooth looping */}
+          <div className="course-item">
+            <FaJava className="icon" /> Java
+          </div>
+          <div className="course-item">
+            <FaPython className="icon" /> Python
+          </div>
+          <div className="course-item">
+            <FaReact className="icon" /> ReactJS
+          </div>
+          <div className="course-item">
+            <FaAws className="icon" /> AI&ML
+          </div>
+          <div className="course-item">
+            <FaShieldAlt className="icon" /> DataScience
+          </div>
+          <div className="course-item">
+            <FaBug className="icon" /> Software Testing
+          </div>
+        </div>
+      </div>
 
       {/* ================= Services Section ================= */}
       <section className="services-section">
@@ -113,7 +184,7 @@ export default function HomePage() {
           Prointern is a powerful online software suite that combines all the
           tools needed to run a successful school or office.
         </p>
-<br></br>
+        <br></br>
         <div className="services-grid">
           <div className="service-card">
             <div className="icon-circle">📘</div>
@@ -146,63 +217,62 @@ export default function HomePage() {
 
       {/* ================= Testimonials Section ================= */}
       <section className="testimonials-section">
-  <div className="testimonial-left">
-    <p className="subtitle"></p>
-    <h2>What They Say?</h2>
-    <p>
-      Prointern has got more than 100k positive ratings from our users worldwide. 
-      Students and teachers greatly benefit from this platform.
-    </p>
-    <p className="assessment">
-      Are you too? Please give your assessment
-    </p>
-    <br></br>
-    <button className="assessment-btn">
-      Write your assessment <span>→</span>
-    </button>
-  </div>
+        <div className="testimonial-left">
+          <p className="subtitle"></p>
+          <h2>What They Say?</h2>
+          <p>
+            Prointern has got more than 100k positive ratings from our users
+            worldwide. Students and teachers greatly benefit from this platform.
+          </p>
+          
+         
+        </div>
 
-  <div className="testimonial-right">
-    <img src={Group} alt="Student" className="testimonial-img" />
-    <div className="testimonial-card">
-      <p>
-        “Thank you so much for your help. It’s exactly what I’ve been looking for. 
-        Prointern saves me time and effort.”
-      </p>
-      <h4>Gloria Rose</h4>
-      <p className="stars">⭐⭐⭐⭐⭐</p>
-    </div>
-  </div>
-</section>
-
+        <div className="testimonial-right">
+          <img src={Group} alt="Student" className="testimonial-img" />
+          <div className="testimonial-card">
+            <p>
+              “Thank you so much for your help. It’s exactly what I’ve been
+              looking for. Prointern saves me time and effort.”
+            </p>
+            <h4>Gloria Rose</h4>
+            <p className="stars">⭐⭐⭐⭐⭐</p>
+          </div>
+        </div>
+      </section>
 
       {/* ================= Footer Section ================= */}
       <footer className="footer">
-  <div className="footer-top">
-    <div className="footer-brand">
-      <img src={prointern} alt="ProIntern" className="footer-logo" />
-      <span>Virtual Class for Zoom</span>
-    </div>
-  </div>
+        <div className="footer-top">
+          <div className="footer-brand">
+            <img src={prointern} alt="ProIntern" className="footer-logo" />
+            <span>Virtual Class for Zoom</span>
+          </div>
+        </div>
 
-  <div className="footer-newsletter">
-    <h3>Subscribe to get our Newsletter</h3>
-    <div className="newsletter-form">
-      <input type="email" placeholder="Your Email" />
-      <button>Subscribe</button>
-    </div>
-  </div>
-<div className="footer-links">
-  <a href="/careers">Careers</a>
-  <a href="/privacy">Privacy Policy</a>
-  <a href="/terms">Terms & Conditions</a>
-</div>
+        <div className="footer-newsletter">
+          <h3>Subscribe to get our Newsletter</h3>
+          <div className="newsletter-form">
+          <input
+        type="email"
+        placeholder="Your Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+            <button onClick={handleSubscribeClick}>Subscribe</button>
+          </div>
+        </div>
+        <div className="footer-links">
+          <a href="/careers">Careers</a>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms & Conditions</a>
+        </div>
 
-  <div className="footer-bottom">
-    <p>© 2025 Prointern Technologies Inc.</p>
-  </div>
-</footer>
-</div>
-    
+        <div className="footer-bottom">
+          <p>© 2025 Prointern Technologies Inc.</p>
+        </div>
+      </footer>
+    </div>
   );
 }

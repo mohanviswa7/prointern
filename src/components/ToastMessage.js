@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export const AppToasts = {
   loginSuccess: () => toast.success("✅ Logged in successfully"),
+  signInSuccess: () => toast.success("✅ Signed in successfully"),
   logoutSuccess: () => toast.info("👋 Logged out successfully"),
   profileUpdated: () => toast.success("✨ Profile updated successfully"),
   networkError: () => toast.error("🌐 Network problem. Please try again."),
