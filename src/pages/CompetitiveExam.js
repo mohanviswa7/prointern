@@ -68,6 +68,19 @@ export default function CompetitiveExam() {
     navigate(`/practice/${selectedExam}`);
   };
 
+  const handlePaidClick = () => {
+    // Open Razorpay payment gateway in a new tab
+    const paymentWindow = window.open("https://rzp.io/rzp/xx2PZNQK", "_blank");
+
+    if (paymentWindow) {
+      paymentWindow.focus();
+    } else {
+      alert(
+        "Unable to open payment gateway. Please check your browser settings."
+      );
+    }
+  };
+
   return (
     <div className="competitive-exam-page">
       {/* Hero Section */}
@@ -217,8 +230,7 @@ export default function CompetitiveExam() {
                     style={{
                       background:
                         examType[exam.key] === "paid" ? "#49BBBD" : "#fff",
-                      color:
-                        examType[exam.key] === "paid" ? "#fff" : "#49BBBD",
+                      color: examType[exam.key] === "paid" ? "#fff" : "#49BBBD",
                       border: "2px solid #49BBBD",
                       borderRadius: 8,
                       padding: "8px 24px",
@@ -229,12 +241,13 @@ export default function CompetitiveExam() {
                     onClick={(e) => {
                       e.stopPropagation();
                       handleTypeSelect(exam.key, "paid");
+                      handlePaidClick();
                     }}
                   >
                     PAID
                   </button>
 
-                  <button
+                  {/* <button
                     style={{
                       background:
                         examType[exam.key] === "unpaid" ? "#49BBBD" : "#fff",
@@ -253,7 +266,7 @@ export default function CompetitiveExam() {
                     }}
                   >
                     UNPAID
-                  </button>
+                  </button> */}
                 </div>
               )}
             </div>

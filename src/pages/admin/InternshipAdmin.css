@@ -1,0 +1,181 @@
+/* General Styles for Internship Admin Dashboard */
+.internship-admin {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.report-selection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.report-selection button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.report-selection button.active {
+  background-color: #0056b3;
+}
+
+.report-selection button:hover {
+  background-color: #0056b3;
+}
+
+.it-report, .non-it-report {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.student-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.student-form input,
+.student-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.student-form button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.student-form button:hover {
+  background-color: #218838;
+}
+
+.task-submissions ul {
+  list-style: none;
+  padding: 0;
+}
+
+.task-submissions li {
+  background: #f1f1f1;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-submissions button {
+  padding: 5px 10px;
+  background-color: #ffc107;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.task-submissions button:hover {
+  background-color: #e0a800;
+}
+
+/* Styling the student table */
+.student-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.student-table th,
+.student-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.student-table th {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.student-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.student-table tr:hover {
+  background-color: #ddd;
+}
+
+.student-table input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.generate-pdf-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.generate-pdf-btn:hover {
+  background-color: #c82333;
+}
+
+/* Styling the admin files table */
+.admin-files-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.admin-files-table th,
+.admin-files-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.admin-files-table th {
+  background-color: #6c757d;
+  color: white;
+  font-weight: bold;
+}
+
+.admin-files-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.admin-files-table tr:hover {
+  background-color: #e9ecef;
+}

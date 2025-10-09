@@ -81,7 +81,7 @@ const policySections = [
         <br />
         Email: support@prointern.com
         <br />
-        Phone: +91-XXXXXXXXXX
+        Phone: +91-8123402974
       </p>
     ),
   },

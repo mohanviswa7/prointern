@@ -1,12 +1,54 @@
 import React, { useState } from "react";
-import placementImg from "../pages/assets/100-placement-assistance-small.png";
+import placementImg from "../../src/pages/assets/100-placement-assistance-small.png";
+import MicrosoftLogo from "../../src/assets/Microsoft-Logo.png";
+import FlipKart from "../../src/assets/Flipkart Logo.png";
+import Amazon from "../../src/assets/Amazon logo.png";
+import LT from "../../src/assets/L&T Logo.png";
+import Mindtree from "../../src/assets/Mindtree Logo.png";
+import Wipro from "../../src/assets/Wipro logo.png";
+import Accenture from "../../src/assets/Accenture-Emblem.png";
+import Nimblix from "../../src/assets/dp.png";
+import Prointern from "../../src/assets/prointern.jpg";
+import Cognizant from "../../src/assets/Cognizant-Logo.png";
+import tcs from "../../src/assets/tcs.png";
+import techmahindra from "../../src/assets/techmahindra.png";
+import hcl from "../../src/assets/hcl.png";
+import infosys from "../../src/assets/infosys.png";
+import Ibm from "../../src/assets/IBM Logo.jpg";
+import Google from "../../src/assets/google-logo.jpg";
+import Oracle from "../../src/assets/Oracle-Logotipo.jpg";
+import Dell from "../../src/assets/Dell-Emblem.jpg";
+import Hp from "../../src/assets/Hewlett-Packard-Logo.png";
+import Paytm from "../../src/assets/logo.png";
+import Zomato from "../../src/assets/zomato-logo.png";
+import capgemini from "../../src/assets/Capgemini-Logo-700x394.jpg";
 import iqImg from "../pages/assets/public/IQ Test (3).jpeg";
 
 const companies = [
-  { name: "TCS", logo: "/images/tcs.png", hr: "9876543210" },
-  { name: "Tech Mahindra", logo: "/images/techmahindra.png", hr: "9876501234" },
-  { name: "HCLTech", logo: "/images/hcl.png", hr: "9001122334" },
-  { name: "Infosys", logo: "/images/infosys.png", hr: "9123456780" },
+  { name: "TCS", logo: tcs, hr: "9876543210" },
+  { name: "Tech Mahindra", logo: techmahindra, hr: "9876501234" },
+  { name: "HCLTech", logo: hcl, hr: "9001122334" },
+  { name: "Infosys", logo: infosys, hr: "9123456780" },
+  { name: "Nimblix", logo: Nimblix, hr: "9012345678" },
+  { name: "Prointern", logo: Prointern, hr: "9000000000" },
+  { name: "Adhuri Events", logo: "", hr: "9876543211" },
+  { name: "Wipro", logo: Wipro, hr: "9876543222" },
+  { name: "Capgemini", logo: capgemini, hr: "9876543233" },
+  { name: "Cognizant", logo: Cognizant, hr: "9876543244" },
+  { name: "Accenture", logo: Accenture, hr: "9876543255" },
+  { name: "Mindtree", logo: Mindtree, hr: "9876543266" },
+  { name: "L&T", logo: LT, hr: "9876543277" },
+  { name: "IBM", logo: Ibm, hr: "9876543288" },
+  { name: "Oracle", logo: Oracle, hr: "9876543299" },
+  { name: "Dell", logo: Dell, hr: "9876543300" },
+  { name: "HP", logo: Hp, hr: "9876543311" },
+  { name: "Adobe", logo: "", hr: "9876543322" },
+  { name: "Google", logo: Google, hr: "9876543333" },
+  { name: "Microsoft", logo: MicrosoftLogo, hr: "9876543344" },
+  { name: "Amazon", logo: Amazon, hr: "9876543355" },
+  { name: "Flipkart", logo: FlipKart, hr: "9876543366" },
+  { name: "Paytm", logo: Paytm, hr: "9876543377" },
+  { name: "Zomato", logo: Zomato, hr: "9876543388" },
 ];
 
 const prointernHR = "9000000000";
@@ -55,7 +97,8 @@ export default function PlacementAssistance() {
         answer: "4",
       },
       {
-        question: "Choose the word that doesn’t belong: Red, Blue, Yellow, Apple",
+        question:
+          "Choose the word that doesn’t belong: Red, Blue, Yellow, Apple",
         options: ["Red", "Blue", "Yellow", "Apple"],
         answer: "Apple",
       },
@@ -156,10 +199,7 @@ export default function PlacementAssistance() {
                           ? "#49BBBD"
                           : "#ff6b6b"
                         : "#fff",
-                    color:
-                      selectedOption === opt
-                        ? "#fff"
-                        : "#1a237e",
+                    color: selectedOption === opt ? "#fff" : "#1a237e",
                     border: "2px solid #49BBBD",
                     borderRadius: 8,
                     padding: "10px",
@@ -251,7 +291,13 @@ export default function PlacementAssistance() {
                   </span>
                 </div>
                 {selectedCompany === company.name && (
-                  <div style={{ marginTop: 10, width: "100%", textAlign: "center" }}>
+                  <div
+                    style={{
+                      marginTop: 10,
+                      width: "100%",
+                      textAlign: "center",
+                    }}
+                  >
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -261,7 +307,7 @@ export default function PlacementAssistance() {
                     >
                       PAID
                     </button>
-                    <button
+                    {/* <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleType(company.name, "unpaid");
@@ -269,9 +315,15 @@ export default function PlacementAssistance() {
                       style={buttonStyle(type[company.name] === "unpaid")}
                     >
                       UNPAID
-                    </button>
+                    </button> */}
                     {type[company.name] && (
-                      <div style={{ marginTop: 10, color: "#1a237e", fontWeight: 600 }}>
+                      <div
+                        style={{
+                          marginTop: 10,
+                          color: "#1a237e",
+                          fontWeight: 600,
+                        }}
+                      >
                         HR Number:{" "}
                         {quizCompleted
                           ? type[company.name] === "paid"
@@ -303,13 +355,19 @@ export default function PlacementAssistance() {
             justifyContent: "center",
           }}
         >
-          <img src={iqImg} alt="IQ Test" style={{ width: 120, marginBottom: 18 }} />
+          <img
+            src={iqImg}
+            alt="IQ Test"
+            style={{ width: 120, marginBottom: 18 }}
+          />
           <h2 style={{ fontWeight: 700, color: "#1a237e", marginBottom: 12 }}>
             IQ Test
           </h2>
           {!quizCompleted ? (
             <>
-              <p style={{ color: "#444", textAlign: "center", marginBottom: 24 }}>
+              <p
+                style={{ color: "#444", textAlign: "center", marginBottom: 24 }}
+              >
                 You need to attend the IQ Test to unlock HR Numbers.
               </p>
               <button
@@ -335,7 +393,8 @@ export default function PlacementAssistance() {
             </>
           ) : (
             <div style={{ textAlign: "center", color: "#1a237e" }}>
-              ✅ Test Completed<br />
+              ✅ Test Completed
+              <br />
               Your Score: {score}/10
             </div>
           )}

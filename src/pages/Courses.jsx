@@ -1,37 +1,74 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import circleImg from '../assets/image.png';
-import personImg from '../assets/person.png';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import circleImg from "../assets/image.png";
+import personImg from "../assets/person.png";
 
 export default function CoursesPage() {
-  const [selectedCategory, setSelectedCategory] = useState(null) // IT or NONIT
-  const [selectedCourse, setSelectedCourse] = useState(null)
-  const [selectedType, setSelectedType] = useState(null)
-  const navigate = useNavigate()
+  const [selectedCategory, setSelectedCategory] = useState(null); // IT or NONIT
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [selectedType, setSelectedType] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
-    if (!selectedCourse || !selectedType) return
-    if (selectedType === 'paid') {
-      navigate('/paid-courses', { state: { course: selectedCourse } })
-    } else if (selectedType === 'unpaid') {
-      navigate('/unpaid-courses', { state: { course: selectedCourse } })
+    // Open Razorpay payment gateway in a new tab
+    const paymentWindow = window.open("https://rzp.io/rzp/xx2PZNQK", "_blank");
+
+    if (paymentWindow) {
+      paymentWindow.focus();
+
+      // Simulate payment success callback
+      paymentWindow.onunload = () => {
+        // Show live session in the current tab after payment success
+        document.getElementById("liveSession").style.display = "block";
+      };
+    } else {
+      alert(
+        "Unable to open payment gateway. Please check your browser settings."
+      );
     }
-  }
+  };
 
   const ITcourses = {
-    java: { title: 'JAVA', desc: 'Master Java to build web & apps' },
-    python: { title: 'PYTHON', desc: 'Master Python programming' },
-    datascience: { title: 'DATA SCIENCE', desc: 'Explore data-driven insights' },
-    html: { title: 'HTML', desc: 'Learn the basics of web' },
-    aiml: { title: 'AI / ML', desc: 'Artificial Intelligence & ML' },
-  }
+    java: { title: "JAVA", desc: "Master Java to build web & apps" },
+    python: { title: "PYTHON", desc: "Master Python programming" },
+    datascience: {
+      title: "DATA SCIENCE",
+      desc: "Explore data-driven insights",
+    },
+
+    cybersecurity: { title: "Cyber Security", desc: "Learn the basics of web" },
+    dataanalysis: { title: "Data Analysis", desc: "Learn the basics of web" },
+    clouddeveloping: {
+      title: "Cloud Developing",
+      desc: "Learn the basics of web",
+    },
+
+    aiml: { title: "AI / ML", desc: "Artificial Intelligence & ML" },
+  };
 
   const NonITcourses = {
-    hr: { title: 'Human Resources', desc: 'Learn HR & people management' },
-    sales: { title: 'Sales & Marketing', desc: 'Master sales strategies & growth' },
-    finance: { title: 'Finance Basics', desc: 'Learn corporate finance essentials' },
-    design: { title: 'Graphic Design', desc: 'Basics of creative design tools' },
-  }
+    hr: { title: "Human Resources", desc: "Learn HR & people management" },
+    finance: {
+      title: "Finance Basics",
+      desc: "Learn corporate finance essentials",
+    },
+    finance: {
+      title: "Event Management",
+      desc: "Learn corporate finance essentials",
+    },
+    sales: {
+      title: "Sales & Marketing",
+      desc: "Master sales strategies & growth",
+    },
+    design: {
+      title: "Graphic Design",
+      desc: "Basics of creative design tools",
+    },
+    bde: {
+      title: "Buisness Development",
+      desc: "Basics of creative design tools",
+    },
+  };
 
   return (
     <>
@@ -165,14 +202,18 @@ export default function CoursesPage() {
               </div>
               <div className="category-row">
                 <button
-                  className={`category-btn ${selectedCategory === 'IT' ? 'selected' : ''}`}
-                  onClick={() => setSelectedCategory('IT')}
+                  className={`category-btn ${
+                    selectedCategory === "IT" ? "selected" : ""
+                  }`}
+                  onClick={() => setSelectedCategory("IT")}
                 >
                   IT
                 </button>
                 <button
-                  className={`category-btn ${selectedCategory === 'NONIT' ? 'selected' : ''}`}
-                  onClick={() => setSelectedCategory('NONIT')}
+                  className={`category-btn ${
+                    selectedCategory === "NONIT" ? "selected" : ""
+                  }`}
+                  onClick={() => setSelectedCategory("NONIT")}
                 >
                   NON-IT
                 </button>
@@ -184,24 +225,46 @@ export default function CoursesPage() {
                 <span className="highlight">{selectedCategory} Courses</span>
               </div>
               <div className="courses-options-grid">
-                {(selectedCategory === 'IT' ? ITcourses : NonITcourses) &&
-                  Object.keys(selectedCategory === 'IT' ? ITcourses : NonITcourses).map((id) => (
+                {(selectedCategory === "IT" ? ITcourses : NonITcourses) &&
+                  Object.keys(
+                    selectedCategory === "IT" ? ITcourses : NonITcourses
+                  ).map((id) => (
                     <label
                       key={id}
-                      className={`courses-option-checkbox${selectedCourse === id ? " selected" : ""}`}
+                      className={`courses-option-checkbox${
+                        selectedCourse === id ? " selected" : ""
+                      }`}
                     >
                       <input
                         type="checkbox"
                         checked={selectedCourse === id}
                         onChange={() => setSelectedCourse(id)}
-                        style={{ accentColor: "#49BBBD", width: 18, height: 18 }}
+                        style={{
+                          accentColor: "#49BBBD",
+                          width: 18,
+                          height: 18,
+                        }}
                       />
                       <div>
                         <span style={{ fontWeight: 600 }}>
-                          {(selectedCategory === 'IT' ? ITcourses : NonITcourses)[id].title}
+                          {
+                            (selectedCategory === "IT"
+                              ? ITcourses
+                              : NonITcourses)[id].title
+                          }
                         </span>
-                        <span style={{ display: "block", fontSize: "0.95em", color: "#666" }}>
-                          {(selectedCategory === 'IT' ? ITcourses : NonITcourses)[id].desc}
+                        <span
+                          style={{
+                            display: "block",
+                            fontSize: "0.95em",
+                            color: "#666",
+                          }}
+                        >
+                          {
+                            (selectedCategory === "IT"
+                              ? ITcourses
+                              : NonITcourses)[id].desc
+                          }
                         </span>
                       </div>
                     </label>
@@ -211,13 +274,15 @@ export default function CoursesPage() {
               {/* Paid / Unpaid row */}
               <div className="type-row">
                 <button
-                  className={`type-btn${selectedType === "paid" ? " selected" : ""}`}
+                  className={`type-btn${
+                    selectedType === "paid" ? " selected" : ""
+                  }`}
                   onClick={() => setSelectedType("paid")}
                   type="button"
                 >
                   PAID
                 </button>
-                {selectedCategory === 'IT' && (
+                {/* {selectedCategory === 'IT' && (
                   <button
                     className={`type-btn${selectedType === "unpaid" ? " selected" : ""}`}
                     onClick={() => setSelectedType("unpaid")}
@@ -225,7 +290,7 @@ export default function CoursesPage() {
                   >
                     UNPAID
                   </button>
-                )}
+                )} */}
               </div>
 
               {/* Submit */}
@@ -243,32 +308,40 @@ export default function CoursesPage() {
         {/* RIGHT CARD */}
         {selectedCategory && (
           <div className="courses-card details">
-            {selectedCategory === 'IT' ? (
+            {selectedCategory === "IT" && selectedCourse ? (
               <>
-                <h3>Paid Courses</h3>
+                <h3>{ITcourses[selectedCourse].title} - Details</h3>
+                <p>{ITcourses[selectedCourse].desc}</p>
                 <p>• Exclusive learning material</p>
                 <p>• No ads, smooth playback</p>
                 <p>• Structured lessons</p>
-                <h3 style={{ color: '#49BBBD' }}>Unpaid Courses</h3>
-                <p>• Basic sample lessons</p>
-                <p>• Open access</p>
-                <p>• No certification</p>
               </>
-            ) : (
+            ) : selectedCategory === "NONIT" ? (
               <>
                 <h3>Paid Non-IT Courses</h3>
                 <p>• Professional learning material</p>
                 <p>• Certification on completion</p>
                 <p>• Job-oriented curriculum</p>
               </>
+            ) : (
+              <p>Please select a course to see details.</p>
             )}
-            <div className="courses-image-section" style={{ position: "relative", height: 60 }}>
-              {/* <img src={circleImg} alt="circle" className="circleImage" /> */}
+            <div
+              className="courses-image-section"
+              style={{ position: "relative", height: 60 }}
+            >
               <img src={personImg} alt="person" className="personImage" />
             </div>
           </div>
         )}
       </div>
+
+      {/* Hidden Live Session Section */}
+      <div id="liveSession" style={{ display: "none", marginTop: "32px" }}>
+        <h2>Live Session</h2>
+        <p>Welcome to the live session!</p>
+        {/* Add live session content here */}
+      </div>
     </>
-  )
+  );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope } from "react-icons/fa";
-import { toast } from "react-toastify"; // import toast
+import { toast, ToastContainer } from "react-toastify"; // import toast and ToastContainer
 import "react-toastify/dist/ReactToastify.css";
 import "./style.css";
 
@@ -11,7 +11,8 @@ function Signup() {
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    role: "Admin",
   });
 
   const handleChange = (e) => {
@@ -44,6 +45,7 @@ function Signup() {
       name: formData.name,
       email: formData.email,
       password: formData.password,
+      role: formData.role,
     };
 
     users.push(newUser);
@@ -61,72 +63,203 @@ function Signup() {
   };
 
   return (
-    <div className="signup-container">
-      <div className="signup-card">
-        {/* Logo */}
-        <center>
-          <img src="/logo192.png" alt="ProIntern Logo" className="signup-logo" />
-        </center>
+    <>
+      <ToastContainer /> {/* Add ToastContainer to render toast messages */}
+      <div
+        className="signup-container"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          className="signup-card"
+          style={{
+            width: "350px",
+            padding: "15px",
+            borderRadius: "10px",
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+            backgroundColor: "#fff",
+          }}
+        >
+          <center>
+            <img
+              src="/logo192.png"
+              alt="ProIntern Logo"
+              className="signup-logo"
+              style={{ marginBottom: "15px" }}
+            />
+          </center>
 
-        <h2>Create an Account</h2>
+          <h2
+            style={{
+              textAlign: "center",
+              marginBottom: "15px",
+            }}
+          >
+            Create an Account
+          </h2>
 
-        <form onSubmit={handleSubmit}>
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Enter your name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-
-          <label>Email Address</label>
-          <div className="input-with-icon">
-            <FaEnvelope className="input-icon" />
+          <form
+            onSubmit={handleSubmit}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
+          >
+            <label>Name</label>
             <input
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              value={formData.email}
+              type="text"
+              name="name"
+              placeholder="Enter your name"
+              value={formData.name}
               onChange={handleChange}
               required
+              style={{
+                padding: "10px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+              }}
             />
-          </div>
 
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
+            <label>Email Address</label>
+            <div className="input-with-icon" style={{ position: "relative" }}>
+              <FaEnvelope
+                className="input-icon"
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "10px",
+                  transform: "translateY(-50%)",
+                  color: "#aaa",
+                }}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                style={{
+                  padding: "10px 10px 10px 35px",
+                  borderRadius: "5px",
+                  border: "1px solid #ccc",
+                }}
+              />
+            </div>
 
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm your password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-          />
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              style={{
+                padding: "10px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+              }}
+            />
 
-          <button type="submit" className="signup-btn">
-            SIGN UP
-          </button>
-        </form>
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm your password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              style={{
+                padding: "10px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+              }}
+            />
 
-        <p className="login-text">
-          Have an account already?{" "}
-          <Link to="/login" className="signup-link">
-            Log in
-          </Link>
-        </p>
+            <div>
+              <label>Select Role:</label>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "5px" /* Reduced gap for closer alignment */,
+                  alignItems: "center",
+                }}
+              >
+                <input
+                  type="radio"
+                  id="admin"
+                  name="role"
+                  value="Admin"
+                  onChange={(e) =>
+                    setFormData({ ...formData, role: e.target.value })
+                  }
+                  required
+                />
+                <label htmlFor="admin" style={{ margin: 0 }}>
+                  Admin
+                </label>
+
+                <input
+                  type="radio"
+                  id="student"
+                  name="role"
+                  value="Student"
+                  onChange={(e) =>
+                    setFormData({ ...formData, role: e.target.value })
+                  }
+                  required
+                />
+                <label htmlFor="student" style={{ margin: 0 }}>
+                  Student
+                </label>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="signup-btn"
+              style={{
+                padding: "10px",
+                borderRadius: "5px",
+                border: "none",
+                backgroundColor: "#FFA500" /* Orange color */,
+                color: "#fff",
+                fontWeight: "bold",
+                cursor: "pointer",
+              }}
+            >
+              SIGN UP
+            </button>
+          </form>
+
+          <p
+            className="login-text"
+            style={{
+              textAlign: "center",
+              marginTop: "10px",
+            }}
+          >
+            Have an account already?{" "}
+            <Link
+              to="/login"
+              className="signup-link"
+              style={{
+                color: "#007BFF",
+                textDecoration: "none",
+              }}
+            >
+              Log in
+            </Link>
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

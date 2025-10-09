@@ -6,12 +6,10 @@ import {
   useNavigate,
   useLocation,
   Navigate,
+  Link,
 } from "react-router-dom";
 
-import {
-  ToastMessageContainer,
-  AppToasts,
-} from "./components/ToastMessage";
+import { ToastMessageContainer, AppToasts } from "./components/ToastMessage";
 
 import Home from "./pages/home";
 import Internship from "./pages/internship/internship.jsx";
@@ -34,6 +32,11 @@ import PrivacyPolicy from "./pages/PrivacyPolicy.js";
 import TermsAndConditions from "./pages/Termsandconditions.js";
 import MockTestPage from "./pages/MockTestPage";
 import PracticePage from "./pages/PracticePage";
+import PlacementAdmin from "./pages/admin/PlacementAdmin.jsx";
+import CoursesAdmin from "./pages/admin/CoursesAdmin.jsx";
+import InternshipAdmin from "./pages/admin/InternshipAdmin.jsx";
+import CompetetiveAdmin from "./pages/admin/CompetetiveAdmin.jsx";
+import RecruiterForm from "./pages/RecruiterForm.jsx";
 
 // --- Attractive Full-Width Navbar CSS ---
 const navbarCss = `
@@ -217,6 +220,7 @@ const navbarCss = `
 // --- Navbar Component ---
 function Navbar({ onSelectInternship }) {
   const navigate = useNavigate();
+  const location = useLocation(); // Access the current location
   const [active, setActive] = useState("Home");
   const [showDropdown, setShowDropdown] = useState(false);
   const hoverTimeoutRef = useRef(null);
@@ -227,8 +231,29 @@ function Navbar({ onSelectInternship }) {
     { label: "Courses", path: "/courses" },
     { label: "Competitive Exam", path: "/competitive-exam" },
     { label: "Placement Assistance", path: "/placement-assistance" },
+  ];
+
+  const navOptionsAdmin = [
+    { label: "InternshipAdmin", path: "/internshipadmin" },
+    { label: "Courses Admin", path: "/coursesadmin" },
+    { label: "Competitive Exam Admin", path: "/competetiveadmin" },
+    { label: "Placement Assistance Admin", path: "/placementadmin" },
     { label: "Certification", path: "/certification" },
   ];
+
+  // Determine which nav options to use based on the current path
+  const isAdminDashboard = [
+    "/admin-dashboard",
+    "/internshipadmin",
+    "/coursesadmin",
+    "/placementadmin",
+    "/competetiveadmin",
+    "/certification",
+  ].some((path) => location.pathname.startsWith(path));
+  const currentNavOptions = isAdminDashboard ? navOptionsAdmin : navOptions;
+  console.log("Mohan", isAdminDashboard);
+
+  // Ensure Navbar does not switch to default options when on admin routes
 
   let profileName = localStorage.getItem("profileName") || "User";
   try {
@@ -279,7 +304,7 @@ function Navbar({ onSelectInternship }) {
 
           <nav className="attractive-navbar-nav">
             <ul>
-              {navOptions.map((option) => (
+              {currentNavOptions.map((option) => (
                 <li
                   key={option.label}
                   className={active === option.label ? "active" : ""}
@@ -300,7 +325,9 @@ function Navbar({ onSelectInternship }) {
                   )}
 
                   {option.label === "Internship" && (
-                    <div className={`dropdown-card ${showDropdown ? "show" : ""}`}>
+                    <div
+                      className={`dropdown-card ${showDropdown ? "show" : ""}`}
+                    >
                       <button
                         onMouseEnter={() => handleInternshipHover("IT")}
                         onClick={() => handleInternshipClick("IT")}
@@ -323,12 +350,53 @@ function Navbar({ onSelectInternship }) {
           <div className="attractive-navbar-right">
             <span className="attractive-navbar-bell">🔔</span>
             <span className="attractive-navbar-user">{profileName}</span>
-            <img src="/images/dp.png" alt="Profile" className="attractive-navbar-avatar" />
-            <button className="attractive-navbar-logout" onClick={handleLogout}>⏻</button>
+            <img
+              src="/images/dp.png"
+              alt="Profile"
+              className="attractive-navbar-avatar"
+            />
+            <button className="attractive-navbar-logout" onClick={handleLogout}>
+              ⏻
+            </button>
           </div>
         </div>
       </header>
     </>
+  );
+}
+
+// --- Admin Dashboard Welcome Component ---
+function AdminDashboardWelcome() {
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1
+        style={{
+          fontWeight: "bold",
+          fontSize: "2rem",
+          color: "orange",
+          animation: "blinker 1.5s linear infinite",
+        }}
+      >
+        Welcome to Admin Dashboard
+      </h1>
+      <p
+        style={{
+          fontWeight: "bold",
+          fontSize: "1.5rem",
+          color: "white",
+          animation: "blinker 1.5s linear infinite",
+        }}
+      >
+        Please Select Any Admin Dashboard in Top
+      </p>
+      <style>
+        {`
+          @keyframes blinker {
+            50% { opacity: 0; }
+          }
+        `}
+      </style>
+    </div>
   );
 }
 
@@ -371,7 +439,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-          <Route
+        <Route
           path="/terms"
           element={
             <ProtectedRoute>
@@ -439,8 +507,22 @@ function App() {
         />
         <Route path="/verify" element={<VerifyEmail />} />
         <Route path="/reset" element={<ResetPassword />} />
-         <Route path="/mocktest/:examId" element={<MockTestPage />} />
+        <Route path="/mocktest/:examId" element={<MockTestPage />} />
         <Route path="/practice/:examId" element={<PracticePage />} />
+
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboardWelcome />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/internshipadmin" element={<InternshipAdmin />} />
+        <Route path="/coursesadmin" element={<CoursesAdmin />} />
+        <Route path="/placementadmin" element={<PlacementAdmin />} />
+        <Route path="/competetiveadmin" element={<CompetetiveAdmin />} />
+        <Route path="/recruiter-form" element={<RecruiterForm />} />
       </Routes>
       <ToastMessageContainer />
     </>

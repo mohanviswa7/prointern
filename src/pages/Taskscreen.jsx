@@ -1,38 +1,346 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaUserTie, FaUsers, FaTasks } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; // if using react-router
+import { jsPDF } from "jspdf";
+import RecruiterForm from "./RecruiterForm";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const InternshipWorkflow = () => {
   const navigate = useNavigate();
+  const [showRecruiterForm, setShowRecruiterForm] = useState(false);
+  const [isPaid, setIsPaid] = useState(false); // State to track payment status
 
   const tasks = [
-    { key: "task1", title: "Internship Hiring", durationDays: 3, icon: <FaUserTie size={40} /> },
-    { key: "task2", title: "Staff Hiring", durationDays: 4, icon: <FaUsers size={40} /> },
-    { key: "task3", title: "Team Handling", durationDays: 21, icon: <FaTasks size={40} /> },
+    {
+      key: "task1",
+      title: "Internship Hiring",
+      durationDays: 3,
+      objective:
+        "You are required to hire a minimum of 1 eligible internship candidate within the specified 3-day period.",
+      eligibility:
+        "Only after successfully hiring at least 1 internship candidate will you be eligible to proceed to Task 2.",
+      icon: <FaUserTie size={40} />,
+    },
+    {
+      key: "task2",
+      title: "Staff Hiring",
+      durationDays: 4,
+      objective:
+        "You are required to hire a minimum of 40 staff members within the 4-day period.",
+      eligibility:
+        "Only after successfully hiring and having the hired candidates join the company, you will be eligible to proceed to Task 3.",
+      icon: <FaUsers size={40} />,
+    },
+    {
+      key: "task3",
+      title: "Team Handling",
+      durationDays: 21,
+      icon: <FaTasks size={40} />,
+    },
   ];
+
+  const videoNotes = {
+    task1: "https://example.com/video1.mp4",
+    task2: "https://example.com/video2.mp4",
+    task3: "https://example.com/video3.mp4",
+  };
+
+  // Added Google Sheet links for download
+  const googleSheetLinks = {
+    task1:
+      "https://docs.google.com/forms/d/e/1FAIpQLSfNM6XoK7gOuiuyHl1HtqRrn17vYE8xA5wXvPklB08h75n41g/viewform?usp=header", // Replace with actual links
+    task2:
+      "https://docs.google.com/forms/d/e/1FAIpQLSf6r1zRpKUktnmCGj0Hr7tGsWm36L6hCenydjd3eSL9f37UeA/viewform?usp=header",
+    task3: "https://docs.google.com/spreadsheets/d/1abc1234567890task3",
+  };
 
   const [completedTasks, setCompletedTasks] = useState([]);
   const [currentInput, setCurrentInput] = useState("");
   const [message, setMessage] = useState("");
+  const [uploadedSheets, setUploadedSheets] = useState({});
+  const [taskCompletionDates, setTaskCompletionDates] = useState({});
+
+  // Load data from local storage on component mount
+  useEffect(() => {
+    const savedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
+    const savedDates =
+      JSON.parse(localStorage.getItem("taskCompletionDates")) || {};
+    setCompletedTasks(savedTasks);
+    setTaskCompletionDates(savedDates);
+  }, []);
+
+  // Dynamically load Razorpay script
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleSubmit = (taskKey) => {
+    // Save user input in local storage
     if (!currentInput.trim()) {
       setMessage("Please enter task details to submit.");
       return;
     }
 
     if (!completedTasks.includes(taskKey)) {
-      setCompletedTasks([...completedTasks, taskKey]);
-      setMessage(`Task "${tasks.find(t => t.key === taskKey).title}" completed!`);
+      const updatedTasks = [...completedTasks, taskKey];
+      setCompletedTasks(updatedTasks);
+      setTaskCompletionDates({
+        ...taskCompletionDates,
+        [taskKey]: new Date().toISOString(),
+      });
+      localStorage.setItem("completedTasks", JSON.stringify(updatedTasks));
+      localStorage.setItem(`${taskKey}-input`, currentInput);
+      setMessage(
+        `Task "${tasks.find((t) => t.key === taskKey).title}" completed!`
+      );
       setCurrentInput("");
+
+      // Show toast message instead of alert
+      toast.success("Task submitted successfully!");
     }
+  };
+
+  // Function to generate a downloadable PDF
+  const generatePDF = (taskKey, fileName, uploadedAt) => {
+    const doc = new jsPDF();
+
+    // Add a title
+    doc.setFontSize(18);
+    doc.setTextColor("#2e75c7");
+    doc.text("Prointern Task Submission Details", 105, 20, { align: "center" });
+
+    // Add task details
+    doc.setFontSize(12);
+    doc.setTextColor("#000");
+    doc.text(`Task: ${taskKey}`, 20, 40);
+    doc.text(`File Name: ${fileName}`, 20, 50);
+    doc.text(`Uploaded At: ${new Date(uploadedAt).toLocaleString()}`, 20, 60);
+
+    // Add a decorative border
+    doc.setDrawColor(0, 0, 0);
+    doc.rect(10, 10, 190, 277, "S");
+
+    // Add a footer
+    doc.setFontSize(10);
+    doc.setTextColor("#555");
+    doc.text("Generated by Prointern", 105, 290, { align: "center" });
+
+    // Save the PDF
+    doc.save(`${fileName}.pdf`);
+  };
+
+  // Function to trigger automatic download of a file
+  const triggerDownload = (fileData, fileName) => {
+    const link = document.createElement("a");
+    link.href = fileData;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Updated handleFileUpload to save metadata for admin page
+  const handleFileUpload = (taskKey, file) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const fileData = reader.result;
+      localStorage.setItem(`${taskKey}-sheet`, fileData);
+      setUploadedSheets({ ...uploadedSheets, [taskKey]: file.name });
+
+      // Save file metadata for admin page
+      const adminFiles = JSON.parse(localStorage.getItem("adminFiles")) || [];
+      const fileMetadata = {
+        taskKey,
+        fileName: file.name,
+        uploadedAt: new Date().toISOString(),
+      };
+      adminFiles.push(fileMetadata);
+      localStorage.setItem("adminFiles", JSON.stringify(adminFiles));
+
+      // Automatically generate a PDF for the uploaded file
+      generatePDF(
+        fileMetadata.taskKey,
+        fileMetadata.fileName,
+        fileMetadata.uploadedAt
+      );
+
+      // Trigger automatic download of the uploaded file
+      triggerDownload(fileData, file.name);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleGoogleFormSubmit = (taskKey, formData) => {
+    // Save form data in local storage
+    localStorage.setItem(`${taskKey}-formData`, JSON.stringify(formData));
+
+    // Generate downloadable file for the form data
+    const fileName = `${taskKey}-formData.json`;
+    const fileData = new Blob([JSON.stringify(formData, null, 2)], {
+      type: "application/json",
+    });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(fileData);
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // New function to handle normal form submissions
+  const handleNormalFormSubmit = (taskKey, formDetails) => {
+    // Save form details in local storage
+    localStorage.setItem(`${taskKey}-formDetails`, JSON.stringify(formDetails));
+
+    // Generate downloadable file for the form details
+    const fileName = `${taskKey}-formDetails.json`;
+    const fileData = new Blob([JSON.stringify(formDetails, null, 2)], {
+      type: "application/json",
+    });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(fileData);
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // New function to handle Prointern form submissions
+  const handleProinternFormSubmit = (taskKey, formDetails) => {
+    // Save form details in local storage
+    localStorage.setItem(
+      `${taskKey}-prointernFormDetails`,
+      JSON.stringify(formDetails)
+    );
+
+    // Generate downloadable PDF for the form details
+    const doc = new jsPDF();
+    doc.text("Prointern Form Submission", 10, 10);
+    doc.text("Task: " + taskKey, 10, 20);
+    Object.entries(formDetails).forEach(([key, value], index) => {
+      doc.text(`${key}: ${value}`, 10, 30 + index * 10);
+    });
+    const fileName = `${taskKey}-prointernFormDetails.pdf`;
+    doc.save(fileName);
+
+    // Allow file upload
+    const fileData = new Blob([JSON.stringify(formDetails, null, 2)], {
+      type: "application/json",
+    });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(fileData);
+    link.download = `${taskKey}-prointernFormDetails.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const isSheetUploaded = (taskKey) => uploadedSheets[taskKey];
+
+  const isTaskUnlocked = (taskKey, index) => {
+    if (index === 0) return true; // First task is always unlocked
+
+    const prevTaskKey = tasks[index - 1].key;
+    const prevCompletionDate = taskCompletionDates[prevTaskKey];
+
+    if (!prevCompletionDate) return false; // Previous task not completed
+
+    const currentDate = new Date();
+    const unlockDate = new Date(prevCompletionDate);
+    unlockDate.setDate(unlockDate.getDate() + 3); // Add 3 days
+
+    return currentDate >= unlockDate;
+  };
+
+  const playVideo = (videoUrl) => {
+    const videoWindow = window.open(videoUrl, "_blank");
+    videoWindow.focus();
   };
 
   const stipendMessage =
     completedTasks.length === tasks.length
       ? "🎉 All tasks completed! You are eligible for a stipend of ₹15,000."
       : "Complete all tasks to earn your stipend.";
+
+  const termsAndConditions = `
+  1. Course Enrollment:
+  - Enrollment in any course is subject to approval by Prointern.
+  - All course fees must be paid in full prior to the commencement of the course unless otherwise agreed.
+  - Prointern reserves the right to refuse enrollment or cancel courses at its discretion.
+  
+  2. Payment and Refunds:
+  - Course fees are non-refundable except in cases where Prointern cancels the course.
+  - Any request for a refund must be submitted in writing.
+  - Payment can be made through authorized payment channels specified by Prointern.
+  
+  3. Attendance and Participation:
+  - Students are expected to attend all classes and actively participate.
+  - Prointern may remove students from a course for disruptive behavior or non-compliance with rules.
+  
+  4. Intellectual Property:
+  - All content, materials, and resources provided by Prointern are protected under copyright laws.
+  - Students are prohibited from reproducing, sharing, or distributing course content without explicit permission.
+  
+  5. Code of Conduct:
+  - Respectful behavior towards instructors, staff, and fellow students is required.
+  - Harassment, discrimination, or offensive behavior will not be tolerated.
+  
+  6. Liability:
+  - Prointern is not responsible for any personal loss, damage, or injury incurred during participation in courses or events.
+  - Students participate at their own risk.
+  
+  7. Privacy:
+  - Prointern respects your privacy. Any personal data collected will be used in accordance with our Privacy Policy.
+  - Students consent to the collection and use of their data for course administration and communication purposes.
+  
+  8. Course Changes and Cancellation:
+  - Prointern reserves the right to modify course content, schedule, or instructors at any time.
+  - In the event of course cancellation, students will be notified and provided with options for rescheduling or refunds.
+  
+  9. Dispute Resolution:
+  - Any disputes arising out of the terms and conditions shall be resolved amicably.
+  - If unresolved, disputes will be subject to the jurisdiction of local courts.
+  
+  10. Acceptance of Terms:
+  - By enrolling in any Prointern course, you acknowledge that you have read, understood, and agree to these Terms and Conditions.
+  `;
+
+  // Extract daily reports for Task 3
+  const getDailyReports = () => {
+    const adminFiles = JSON.parse(localStorage.getItem("adminFiles")) || [];
+    const task1And2Files = adminFiles.filter(
+      (file) => file.taskKey === "task1" || file.taskKey === "task2"
+    );
+
+    const groupedByDay = task1And2Files.reduce((acc, file) => {
+      const date = new Date(file.uploadedAt).toLocaleDateString();
+      if (!acc[date]) acc[date] = [];
+      acc[date].push(file);
+      return acc;
+    }, {});
+
+    return groupedByDay;
+  };
+
+  const handlePayment = () => {
+    // Open Razorpay payment URL in a new window
+    const paymentWindow = window.open("https://rzp.io/rzp/xx2PZNQK", "_blank");
+    if (paymentWindow) {
+      paymentWindow.focus();
+    } else {
+      toast.error(
+        "Unable to open payment gateway. Please check your browser settings."
+      );
+    }
+  };
 
   return (
     <div
@@ -45,98 +353,15 @@ const InternshipWorkflow = () => {
         color: "#fff",
         boxShadow: "0px 15px 40px rgba(0,0,0,0.3)",
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        position: "relative",
       }}
     >
-      <h1 style={{ textAlign: "center", marginBottom: "40px" }}>Internship Workflow</h1>
-
-      <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
-        {tasks.map((task, index) => {
-          const isEnabled = index === 0 || completedTasks.includes(tasks[index - 1].key);
-          const isCompleted = completedTasks.includes(task.key);
-
-          return (
-            <motion.div
-              key={task.key}
-              whileHover={{ scale: isEnabled ? 1.05 : 1 }}
-              style={{
-                background: isCompleted ? "#49BBBD" : "#1a457f",
-                opacity: isEnabled ? 1 : 0.5,
-                cursor: isEnabled ? "pointer" : "not-allowed",
-                padding: "20px",
-                borderRadius: "15px",
-                width: "220px",
-                textAlign: "center",
-                boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
-                position: "relative",
-                transition: "all 0.3s ease",
-                color: "#fff",
-              }}
-              title={!isEnabled ? "First task is not completed. You are not eligible for this task." : ""}
-            >
-              <div style={{ marginBottom: "10px", color: "#fff" }}>{task.icon}</div>
-              <h3 style={{ marginBottom: "10px" }}>{task.title}</h3>
-              <p style={{ marginBottom: "15px" }}>
-                Duration: {task.durationDays} {task.durationDays > 1 ? "days" : "day"}
-              </p>
-
-              {isEnabled && !isCompleted && (
-                <>
-                  <input
-                    type="text"
-                    placeholder={`Enter details for ${task.title}`}
-                    value={currentInput}
-                    onChange={(e) => setCurrentInput(e.target.value)}
-                    style={{
-                      width: "90%",
-                      padding: "8px",
-                      borderRadius: "5px",
-                      border: "1px solid #fff",
-                      marginBottom: "10px",
-                      background: "#2e75c7",
-                      color: "#fff",
-                    }}
-                  />
-                  <button
-                    onClick={() => handleSubmit(task.key)}
-                    style={{
-                      padding: "8px 15px",
-                      borderRadius: "8px",
-                      border: "none",
-                      background: "#49BBBD",
-                      color: "#fff",
-                      fontWeight: "600",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Submit
-                  </button>
-                </>
-              )}
-
-              {isCompleted && (
-                <p style={{ color: "#d4edda", fontWeight: "600", marginTop: "10px" }}>✅ Completed</p>
-              )}
-            </motion.div>
-          );
-        })}
-      </div>
-
-      {message && (
-        <div style={{ marginTop: "20px", color: "#d4edda", fontWeight: "600", textAlign: "center" }}>
-          {message}
-        </div>
-      )}
-
-      <div style={{ marginTop: "30px", fontWeight: "700", fontSize: "1.2rem", color: completedTasks.length === tasks.length ? "#d4edda" : "#ffdddd", textAlign: "center" }}>
-        {stipendMessage}
-      </div>
-
-      <div style={{ textAlign: "center" }}>
+      <div style={{ position: "absolute", top: "20px", left: "20px" }}>
         <button
           onClick={() => navigate("/home")}
           style={{
-            marginTop: "40px",
             padding: "10px 20px",
+
             borderRadius: "8px",
             border: "none",
             background: "#fff",
@@ -148,6 +373,348 @@ const InternshipWorkflow = () => {
           ← Back to Home
         </button>
       </div>
+
+      {showRecruiterForm ? (
+        <RecruiterForm />
+      ) : !isPaid ? (
+        <div style={{ textAlign: "center", marginTop: "50px" }}>
+          <h2 style={{ color: "#FFD700" }}>Payment Required</h2>
+          <p style={{ color: "#d4edda" }}>
+            Please complete the payment to unlock tasks.
+          </p>
+          <button
+            onClick={handlePayment}
+            style={{
+              padding: "10px 20px",
+              borderRadius: "8px",
+              border: "none",
+              background: "#49BBBD",
+              color: "#fff",
+              cursor: "pointer",
+              fontWeight: "600",
+            }}
+          >
+            Pay Now
+          </button>
+        </div>
+      ) : (
+        <>
+          <h1
+            style={{
+              textAlign: "center",
+              marginBottom: "20px",
+              color: "#FFD700",
+              fontSize: "2.5rem",
+              textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+            }}
+          >
+            Internship Workflow
+          </h1>
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#1a457f",
+              padding: "10px 20px",
+              borderRadius: "10px",
+              marginBottom: "30px",
+              boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
+            }}
+          >
+            <span style={{ marginRight: "10px", fontSize: "1.5rem" }}>💡</span>
+            <p style={{ margin: 0, fontSize: "1rem", color: "#d4edda" }}>
+              Note: Without completion of tasks, stipend will not be provided.
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+            }}
+          >
+            {/* Grouped Task Cards */}
+            <div
+              style={{
+                background: "#1a457f",
+                padding: "20px",
+                borderRadius: "15px",
+                boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
+              }}
+            >
+              <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+                Tasks Overview
+              </h2>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "20px",
+                  flexWrap: "wrap",
+                }}
+              >
+                {tasks.map((task, index) => {
+                  const isEnabled = isTaskUnlocked(task.key, index);
+                  const isCompleted = completedTasks.includes(task.key);
+
+                  return (
+                    <motion.div
+                      key={task.key}
+                      whileHover={{ scale: isEnabled ? 1.05 : 1 }}
+                      style={{
+                        background: isCompleted ? "#49BBBD" : "#1a457f",
+                        opacity: isEnabled ? 1 : 0.5,
+                        cursor: isEnabled ? "pointer" : "not-allowed",
+                        padding: "20px",
+                        borderRadius: "15px",
+                        width: "220px",
+                        textAlign: "center",
+                        boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
+                        position: "relative",
+                        transition: "all 0.3s ease",
+                        color: "#fff",
+                      }}
+                      title={
+                        !isEnabled
+                          ? "First task is not completed. You are not eligible for this task."
+                          : ""
+                      }
+                    >
+                      <div style={{ marginBottom: "10px", color: "#fff" }}>
+                        {task.icon}
+                      </div>
+                      <h3 style={{ marginBottom: "10px" }}>{task.title}</h3>
+                      <p style={{ marginBottom: "15px" }}>
+                        Duration: {task.durationDays}{" "}
+                        {task.durationDays > 1 ? "days" : "day"}
+                      </p>
+                      {task.objective && (
+                        <p style={{ marginBottom: "10px", fontSize: "0.9rem" }}>
+                          <strong>Objective:</strong> {task.objective}
+                        </p>
+                      )}
+                      {task.eligibility && (
+                        <p
+                          style={{
+                            marginBottom: "15px",
+                            fontSize: "0.9rem",
+                            color: "#ffdddd",
+                          }}
+                        >
+                          <strong>Eligibility for Next Task:</strong>{" "}
+                          {task.eligibility}
+                        </p>
+                      )}
+
+                      <button
+                        onClick={() => setShowRecruiterForm(true)}
+                        style={{
+                          display: "block",
+                          marginBottom: "10px",
+                          color: "#d4edda",
+                          textDecoration: "underline",
+                          cursor: "pointer",
+                          background: "none",
+                          border: "none",
+                        }}
+                      >
+                        Submit Candidate Details
+                      </button>
+
+                      <button
+                        onClick={() => playVideo(videoNotes[task.key])}
+                        style={{
+                          padding: "5px 10px",
+                          borderRadius: "5px",
+                          border: "none",
+                          background: "#49BBBD",
+                          color: "#fff",
+                          fontWeight: "600",
+                          cursor: "pointer",
+                          marginBottom: "10px",
+                        }}
+                      >
+                        🎥 Play Video Note
+                      </button>
+
+                      {isCompleted && (
+                        <p
+                          style={{
+                            color: "#d4edda",
+                            fontWeight: "600",
+                            marginTop: "10px",
+                          }}
+                        >
+                          ✅ Completed
+                        </p>
+                      )}
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Terms and Conditions Card */}
+            <div
+              style={{
+                background: "#1a457f",
+                padding: "20px",
+                borderRadius: "15px",
+                boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
+              }}
+            >
+              <h2
+                style={{
+                  textAlign: "center",
+                  marginBottom: "20px",
+                  color: "#FFD700",
+                  textShadow: "1px 1px 3px rgba(0, 0, 0, 0.5)",
+                }}
+              >
+                Terms and Conditions
+              </h2>
+              <div
+                style={{
+                  textAlign: "left",
+                  color: "#d4edda",
+                  lineHeight: "1.8",
+                }}
+              >
+                <h3 style={{ color: "#FFD700" }}>1. Course Enrollment:</h3>
+                <ul>
+                  <li>
+                    Enrollment in any course is subject to approval by
+                    Prointern.
+                  </li>
+                  <li>
+                    All course fees must be paid in full prior to the
+                    commencement of the course unless otherwise agreed.
+                  </li>
+                  <li>
+                    Prointern reserves the right to refuse enrollment or cancel
+                    courses at its discretion.
+                  </li>
+                </ul>
+
+                <h3 style={{ color: "#FFD700" }}>2. Payment and Refunds:</h3>
+                <ul>
+                  <li>
+                    Course fees are non-refundable except in cases where
+                    Prointern cancels the course.
+                  </li>
+                  <li>
+                    Any request for a refund must be submitted in writing.
+                  </li>
+                  <li>
+                    Payment can be made through authorized payment channels
+                    specified by Prointern.
+                  </li>
+                </ul>
+
+                <h3 style={{ color: "#FFD700" }}>
+                  3. Attendance and Participation:
+                </h3>
+                <ul>
+                  <li>
+                    Students are expected to attend all classes and actively
+                    participate.
+                  </li>
+                  <li>
+                    Prointern may remove students from a course for disruptive
+                    behavior or non-compliance with rules.
+                  </li>
+                </ul>
+
+                <h3 style={{ color: "#FFD700" }}>4. Intellectual Property:</h3>
+                <ul>
+                  <li>
+                    All content, materials, and resources provided by Prointern
+                    are protected under copyright laws.
+                  </li>
+                  <li>
+                    Students are prohibited from reproducing, sharing, or
+                    distributing course content without explicit permission.
+                  </li>
+                </ul>
+
+                <h3 style={{ color: "#FFD700" }}>5. Code of Conduct:</h3>
+                <ul>
+                  <li>
+                    Respectful behavior towards instructors, staff, and fellow
+                    students is required.
+                  </li>
+                  <li>
+                    Harassment, discrimination, or offensive behavior will not
+                    be tolerated.
+                  </li>
+                </ul>
+
+                <h3 style={{ color: "#FFD700" }}>6. Liability:</h3>
+                <ul>
+                  <li>
+                    Prointern is not responsible for any personal loss, damage,
+                    or injury incurred during participation in courses or
+                    events.
+                  </li>
+                  <li>Students participate at their own risk.</li>
+                </ul>
+
+                <h3 style={{ color: "#FFD700" }}>7. Privacy:</h3>
+                <ul>
+                  <li>
+                    Prointern respects your privacy. Any personal data collected
+                    will be used in accordance with our Privacy Policy.
+                  </li>
+                  <li>
+                    Students consent to the collection and use of their data for
+                    course administration and communication purposes.
+                  </li>
+                </ul>
+
+                <h3 style={{ color: "#FFD700" }}>
+                  8. Course Changes and Cancellation:
+                </h3>
+                <ul>
+                  <li>
+                    Prointern reserves the right to modify course content,
+                    schedule, or instructors at any time.
+                  </li>
+                  <li>
+                    In the event of course cancellation, students will be
+                    notified and provided with options for rescheduling or
+                    refunds.
+                  </li>
+                </ul>
+
+                <h3 style={{ color: "#FFD700" }}>9. Dispute Resolution:</h3>
+                <ul>
+                  <li>
+                    Any disputes arising out of the terms and conditions shall
+                    be resolved amicably.
+                  </li>
+                  <li>
+                    If unresolved, disputes will be subject to the jurisdiction
+                    of local courts.
+                  </li>
+                </ul>
+
+                <h3 style={{ color: "#FFD700" }}>10. Acceptance of Terms:</h3>
+                <ul>
+                  <li>
+                    By enrolling in any Prointern course, you acknowledge that
+                    you have read, understood, and agree to these Terms and
+                    Conditions.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+      <ToastContainer />
     </div>
   );
 };
