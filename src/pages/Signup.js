@@ -4,7 +4,7 @@ import { FaEnvelope } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify"; // import toast and ToastContainer
 import "react-toastify/dist/ReactToastify.css";
 import "./style.css";
-
+import ProinternLogo from "../../src/assets/prointern logo.jpg";
 function Signup() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -86,7 +86,7 @@ function Signup() {
         >
           <center>
             <img
-              src="/logo192.png"
+              src={ProinternLogo}
               alt="ProIntern Logo"
               className="signup-logo"
               style={{ marginBottom: "15px" }}

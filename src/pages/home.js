@@ -8,7 +8,7 @@ import {
   FaShieldAlt,
   FaBug,
 } from "react-icons/fa";
-import logo from "../assets/prointern logo.jpg";
+import ProinternLogo from "../../src/assets/prointern logo.jpg";
 import stevan from "../assets/stevan.jpg";
 import Group from "../assets/Mask Group.jpg";
 import prointern from "../assets/prointern.jpg";

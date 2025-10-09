@@ -19,6 +19,7 @@ function VerifyEmail() {
 
   const handleChange = (value, index) => {
     if (/^[0-9]?$/.test(value)) {
+      // Regular expression is valid and does not require changes
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
@@ -56,17 +57,27 @@ function VerifyEmail() {
     <div className="verify-container">
       <div className="verify-card">
         {/* Back Arrow */}
-        <button className="back-btn" onClick={handleBack}>←</button>
+        <button className="back-btn" onClick={handleBack}>
+          ←
+        </button>
 
         <h2>Verify your email address</h2>
         <p>
-          We    l address<br />
+          We l address
+          <br />
           <strong>({email})</strong>. Enter in the field below.
         </p>
 
         {/* OTP Inputs */}
         <form onSubmit={handleSubmit} className="otp-form">
-          <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginBottom: "20px" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "10px",
+              marginBottom: "20px",
+            }}
+          >
             {otp.map((digit, index) => (
               <input
                 key={index}
@@ -91,7 +102,9 @@ function VerifyEmail() {
             Resend
           </span>
         </p>
-        <p className="timer">Expires in 00:{timer < 10 ? `0${timer}` : timer}</p>
+        <p className="timer">
+          Expires in 00:{timer < 10 ? `0${timer}` : timer}
+        </p>
       </div>
     </div>
   );
