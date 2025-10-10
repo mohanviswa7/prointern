@@ -4,7 +4,7 @@ import { gapi } from "gapi-script";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./style.css";
-import ProinternLogo from "../../src/assets/prointern logo.jpg";
+import ProinternLogo from "../assets/prointern logo.jpg";
 const clientId =
   "667601110937-lkjld131c8s2rg84s5ekf4i38mbtifjp.apps.googleusercontent.com";
 
@@ -38,7 +38,7 @@ function Login() {
       const userData = {
         name: profile.getName(),
         email: profile.getEmail(),
-        image: profile.getImageUrl(),
+        image: encodeURI(profile.getImageUrl()), // Ensure URL is properly escaped
       };
 
       // Save user to localStorage
@@ -120,12 +120,12 @@ function Login() {
     <div className="signup-container">
       <ToastContainer /> {/* Add ToastContainer to render toast messages */}
       <div className="signup-card">
-       <img
-  src={ProinternLogo}
-  alt="ProIntern Logo"
-  className="signup-logo"
-  style={{ marginBottom: "15px" }}
-/>
+        <img
+          src={ProinternLogo}
+          alt="ProIntern Logo"
+          className="signup-logo"
+          style={{ marginBottom: "15px" }}
+        />
 
         <h2>Welcome Back</h2>
         <p>Login to continue</p>

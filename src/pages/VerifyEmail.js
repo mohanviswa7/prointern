@@ -18,7 +18,7 @@ function VerifyEmail() {
   }, [timer]);
 
   const handleChange = (value, index) => {
-    if (/^[0-9]?$/.test(value)) {
+    if (/^[0-9]?\$/.test(value)) {
       // Regular expression is valid and does not require changes
       const newOtp = [...otp];
       newOtp[index] = value;
@@ -63,9 +63,9 @@ function VerifyEmail() {
 
         <h2>Verify your email address</h2>
         <p>
-          We l address
+          We sent a code to your email address
           <br />
-          <strong>({email})</strong>. Enter in the field below.
+          <strong>({email})</strong>. Enter it in the field below.
         </p>
 
         {/* OTP Inputs */}
