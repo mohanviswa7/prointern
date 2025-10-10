@@ -38,7 +38,7 @@ function Login() {
       const userData = {
         name: profile.getName(),
         email: profile.getEmail(),
-        image: profile.getImageUrl(),
+        image: encodeURI(profile.getImageUrl()), // Ensure URL is properly escaped
       };
 
       // Save user to localStorage
