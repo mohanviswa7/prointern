@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import CertificateImage from "../pages/assets/CertificateNew2.jpg"; // Background certificate template
-import ProinternLogo from "../../src/assets/prointern logo.jpg"; // Prointern logo
+import ProinternLogo from "../assets/prointern logo.jpg"; // Prointern logo
 
 export default function CertificateGenerator() {
   const [name, setName] = useState("");

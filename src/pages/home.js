@@ -8,7 +8,7 @@ import {
   FaShieldAlt,
   FaBug,
 } from "react-icons/fa";
-import ProinternLogo from "../../src/assets/prointern logo.jpg";
+import ProinternLogo from "../assets/prointern logo.jpg";
 import stevan from "../assets/stevan.jpg";
 import Group from "../assets/Mask Group.jpg";
 import prointern from "../assets/prointern.jpg";
@@ -29,7 +29,7 @@ export default function HomePage() {
       }
     );
   };
-    const handleScheduleClick = () => {
+  const handleScheduleClick = () => {
     toast.info(
       "We will assign a meet. Kindly wait for updates from our team.",
       {
@@ -38,7 +38,7 @@ export default function HomePage() {
       }
     );
   };
-const handleSubscribeClick = () => {
+  const handleSubscribeClick = () => {
     if (!email) {
       toast.error("Email is required!", {
         position: "top-center",
@@ -65,7 +65,6 @@ const handleSubscribeClick = () => {
   };
   return (
     <div>
-    
       {/* ================= Hero Section ================= */}
       <section className="hero">
         <div className="hero-left">
@@ -73,17 +72,19 @@ const handleSubscribeClick = () => {
             <span className="highlight">Studying</span>{" "}
             <span className="black-bold">Online is now much easier</span>
           </h1>
-            <div className="service-card" style={{marginLeft:"600px"}}>
+          <div className="service-card" style={{ marginLeft: "600px" }}>
             <div className="icon-circle">💼</div>
-          
+
             <p>
-               Prointern is an interesting platform that will teach you in a more
-            interactive way
+              Prointern is an interesting platform that will teach you in a more
+              interactive way
             </p>
           </div>
-         
+
           <div className="hero-buttons">
-            <button className="btn-primary" onClick={handleWatchClick}>Join for free</button>
+            <button className="btn-primary" onClick={handleWatchClick}>
+              Join for free
+            </button>
             <button className="btn-secondary">▶ Watch how it works</button>
           </div>
         </div>
@@ -107,7 +108,9 @@ const handleSubscribeClick = () => {
           <div className="floating-card card-bottom">
             <p>👩‍🎓 User Experience Class</p>
             <span>Today at 12.00 PM</span>
-            <button className="join-btn" onClick={handleScheduleClick}>Join Now</button>
+            <button className="join-btn" onClick={handleScheduleClick}>
+              Join Now
+            </button>
           </div>
         </div>
       </section>
@@ -224,8 +227,6 @@ const handleSubscribeClick = () => {
             Prointern has got more than 100k positive ratings from our users
             worldwide. Students and teachers greatly benefit from this platform.
           </p>
-          
-         
         </div>
 
         <div className="testimonial-right">
@@ -253,13 +254,13 @@ const handleSubscribeClick = () => {
         <div className="footer-newsletter">
           <h3>Subscribe to get our Newsletter</h3>
           <div className="newsletter-form">
-          <input
-        type="email"
-        placeholder="Your Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
+            <input
+              type="email"
+              placeholder="Your Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
             <button onClick={handleSubscribeClick}>Subscribe</button>
           </div>
         </div>

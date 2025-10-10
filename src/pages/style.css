@@ -22,7 +22,7 @@
 /* Logo */
 .signup-logo {
   width: 150px;
-  margin: 0 auto 30px; /* top & bottom: 0 & 30px, left/right auto to center */
+  margin: 0 auto 30px; /* top & bottom: 0 & 30px, left\/right auto to center */
   display: block;      /* needed to center an image with auto margins */
 }
 
