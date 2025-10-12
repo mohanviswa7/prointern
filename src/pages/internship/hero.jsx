@@ -26,9 +26,34 @@ export default function InternshipSelection() {
       desc: "Detail structure about data analysis",
     },
     {
+      id: "DATA Science",
+      name: "DATA Science",
+      desc: "Detail structure about data science",
+    },
+    {
       id: "SOFTWARE TESTING",
       name: "SOFTWARE TESTING",
       desc: "advanced testing stacks",
+    },
+    {
+      id: "POWER BI",
+      name: "POWER BI",
+      desc: "Integrating Concepts",
+    },
+    {
+      id: "Cloud developing",
+      name: "Cloud Developing",
+      desc: "Emphathetic Cloud Parts",
+    },
+    {
+      id: "AWS",
+      name: "AWS",
+      desc: "Asthetic domain and server services",
+    },
+    {
+      id: "Linux",
+      name: "Linux",
+      desc: "OS for Different Systems",
     },
   ];
 
@@ -67,21 +92,43 @@ export default function InternshipSelection() {
   };
 
   return (
-    <div className="main-container">
+    <div className="main-container" style={{ display: "flex", gap: "20px" }}>
       {/* Left Card */}
-      <div className="card left-card">
+      <div
+        className="card left-card"
+        style={{
+          flex: "1",
+          backgroundColor: "#f9f9f9",
+          padding: "20px",
+          borderRadius: "10px",
+        }}
+      >
         <h2 className="title">Choose Internship</h2>
         <p className="subtitle">
           Choose your internship course and get started with ProIntern!
         </p>
 
-        <div className="course-list">
+        <div
+          className="course-list"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: "20px",
+          }}
+        >
           {courses.map((course) => (
             <div
               key={course.id}
               className={`course-item ${
                 selectedCourse === course.id ? "active" : ""
               }`}
+              style={{
+                boxSizing: "border-box",
+                backgroundColor: "#fff",
+                padding: "10px",
+                borderRadius: "8px",
+                boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
+              }}
               onClick={() => {
                 setSelectedCourse(course.id);
                 localStorage.setItem("selectedCourse", course.id);
@@ -102,42 +149,52 @@ export default function InternshipSelection() {
 
         {/* Paid / Unpaid Buttons */}
         {selectedCourse && (
-          <div className="btn-group">
+          <div className="btn-group" style={{ marginTop: "20px" }}>
             <button
               className={`btn ${assistType === "PAID" ? "active" : ""}`}
               onClick={handlePaidClick}
             >
               PAID
             </button>
-            {/* <button
-              className={`btn ${assistType === "UNPAID" ? "active" : ""}`}
-              onClick={() => {
-                setAssistType("UNPAID");
-                localStorage.setItem("assistType", "UNPAID");
-              }}
-            >
-              UNPAID
-            </button> */}
           </div>
         )}
-
-        {/* Submit Button */}
-        {/* <button
-          className="submit-btn"
-          disabled={!selectedCourse || !assistType}
-          onClick={handleSubmit}
-        >
-          SUBMIT
-        </button> */}
       </div>
 
       {/* Right Card */}
-      <div className="card right-card">
+      <div
+        className="card right-card"
+        style={{
+          flex: "1",
+          backgroundColor: "#fff",
+          padding: "20px",
+          borderRadius: "10px",
+          boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
+        }}
+      >
         {selectedCourse ? (
           <>
             <h2 className="title">
               Internship in {courses.find((c) => c.id === selectedCourse)?.name}
             </h2>
+
+            <p
+              style={{
+                textAlign: "center",
+                color: "#ff6600",
+                fontWeight: "bold",
+                animation: "blink 1s infinite",
+              }}
+            >
+              For IT Internship: ₹15,000
+            </p>
+            <style>
+              {`
+                @keyframes blink {
+                  0%, 100% { opacity: 1; }
+                  50% { opacity: 0; }
+                }
+              `}
+            </style>
 
             <h3 style={{ color: "#1a237e", marginTop: "20px" }}>
               Paid Courses

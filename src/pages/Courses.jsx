@@ -10,64 +10,188 @@ export default function CoursesPage() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    // Open Razorpay payment gateway in a new tab
-    const paymentWindow = window.open("https://rzp.io/rzp/xx2PZNQK", "_blank");
-
-    if (paymentWindow) {
-      paymentWindow.focus();
-
-      // Simulate payment success callback
-      paymentWindow.onunload = () => {
-        // Show live session in the current tab after payment success
-        document.getElementById("liveSession").style.display = "block";
+    if (selectedType === "paid") {
+      const options = {
+        key: "rzp_live_RR3GHL1TJu3MZw", // Razorpay live API key
+        amount: 50000, // Payment amount in paise (e.g., ₹500)
+        currency: "INR",
+        name: "Prointern",
+        description: "Course Payment",
+        handler: function (response) {
+          // Navigate to Taskscreen after payment success
+          navigate("/taskscreen");
+        },
+        prefill: {
+          name: "Your Name",
+          email: "your.email@example.com",
+          contact: "9999999999",
+        },
+        theme: {
+          color: "#49BBBD",
+        },
       };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
     } else {
-      alert(
-        "Unable to open payment gateway. Please check your browser settings."
-      );
+      // Navigate directly to Taskscreen for unpaid courses
+      navigate("/taskscreen");
     }
   };
 
   const ITcourses = {
-    java: { title: "JAVA", desc: "Master Java to build web & apps" },
-    python: { title: "PYTHON", desc: "Master Python programming" },
+    java: {
+      title: "JAVA",
+      desc: "Master Java to build web & apps",
+      duration: "6 Months",
+      actualAmount: 80000,
+      scholarshipAmount: 40000,
+    },
+    python: {
+      title: "PYTHON",
+      desc: "Master Python programming",
+      duration: "6 Months",
+      actualAmount: 80000,
+      scholarshipAmount: 40000,
+    },
     datascience: {
       title: "DATA SCIENCE",
       desc: "Explore data-driven insights",
+      duration: "12 Months",
+      actualAmount: 160000,
+      scholarshipAmount: 80000,
     },
-
-    cybersecurity: { title: "Cyber Security", desc: "Learn the basics of web" },
-    dataanalysis: { title: "Data Analysis", desc: "Learn the basics of web" },
+    mernstack: {
+      title: "MERNSTACK",
+      desc: "Learn the advanced stacks",
+      duration: "6 Months",
+      actualAmount: 80000,
+      scholarshipAmount: 40000,
+    },
+    aiml: {
+      title: "AI / ML",
+      desc: "Artificial Intelligence & ML",
+      duration: "6 Months",
+      actualAmount: 80000,
+      scholarshipAmount: 40000,
+    },
+    dataanalysis: {
+      title: "DATA ANALYSIS",
+      desc: "Detail structure about data analysis",
+      duration: "6 Months",
+      actualAmount: 80000,
+      scholarshipAmount: 40000,
+    },
+    datastructure: {
+      title: "SAP Basic",
+      desc: "SAP Basic course for beginners",
+      duration: "6 Months",
+      actualAmount: 80000,
+      scholarshipAmount: 40000,
+    },
+    softwaretesting: {
+      title: "SOFTWARE TESTING",
+      desc: "advanced testing stacks",
+      duration: "6 Months",
+      actualAmount: 80000,
+      scholarshipAmount: 40000,
+    },
+    powerbi: {
+      title: "POWER BI",
+      desc: "Integrating Concepts",
+      duration: "6 Months",
+      actualAmount: 80000,
+      scholarshipAmount: 40000,
+    },
     clouddeveloping: {
       title: "Cloud Developing",
-      desc: "Learn the basics of web",
+      desc: "Emphathetic Cloud Parts",
+      duration: "12 Months",
+      actualAmount: 160000,
+      scholarshipAmount: 80000,
     },
-
-    aiml: { title: "AI / ML", desc: "Artificial Intelligence & ML" },
+    aws: {
+      title: "AWS",
+      desc: "Asthetic domain and server services",
+      duration: "6 Months",
+      actualAmount: 80000,
+      scholarshipAmount: 40000,
+    },
+    linux: {
+      title: "Linux",
+      desc: "OS for Different Systems",
+      duration: "6 Months",
+      actualAmount: 80000,
+      scholarshipAmount: 40000,
+    },
   };
 
   const NonITcourses = {
-    hr: { title: "Human Resources", desc: "Learn HR & people management" },
+    hr: {
+      title: "Human Resources",
+      desc: "Learn HR & people management",
+      duration: "2 Months",
+      fee: 3000,
+    },
     finance: {
       title: "Finance Basics",
       desc: "Learn corporate finance essentials",
+      duration: "2 Months",
+      fee: 3000,
     },
-    finance: {
+    event: {
       title: "Event Management",
       desc: "Learn corporate finance essentials",
+      duration: "2 Months",
+      fee: 3000,
     },
     sales: {
       title: "Sales & Marketing",
       desc: "Master sales strategies & growth",
+      duration: "2 Months",
+      fee: 3000,
     },
     design: {
       title: "Graphic Design",
       desc: "Basics of creative design tools",
+      duration: "2 Months",
+      fee: 3000,
     },
     bde: {
-      title: "Buisness Development",
+      title: "Business Development",
       desc: "Basics of creative design tools",
+      duration: "2 Months",
+      fee: 3000,
     },
+  };
+
+  const handleCourseSelection = (id) => {
+    setSelectedCourse(id);
+
+    // Retrieve the logged-in profile name (mocked for now)
+    const profileName = localStorage.getItem("profileName") || "Guest";
+
+    // Prepare course data
+    const courseData = {
+      category: selectedCategory,
+      courseId: id,
+      courseDetails:
+        selectedCategory === "IT" ? ITcourses[id] : NonITcourses[id],
+    };
+
+    // Update local storage to avoid duplicates
+    const existingData =
+      JSON.parse(localStorage.getItem("selectedCourses")) || {};
+    existingData[profileName] = existingData[profileName] || [];
+
+    // Remove any existing course for the same category
+    existingData[profileName] = existingData[profileName].filter(
+      (course) => course.category !== selectedCategory
+    );
+
+    // Add the new course
+    existingData[profileName].push(courseData);
+    localStorage.setItem("selectedCourses", JSON.stringify(existingData));
   };
 
   return (
@@ -190,6 +314,24 @@ export default function CoursesPage() {
           background: #ccc;
           cursor: not-allowed;
         }
+        .courses-options-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
+        }
+        .back-button-container {
+          margin-bottom: 16px;
+        }
+        .back-button {
+          background: #49BBBD;
+          color: #fff;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+        }
       `}</style>
 
       <div className="courses-main-flex">
@@ -238,7 +380,9 @@ export default function CoursesPage() {
                       <input
                         type="checkbox"
                         checked={selectedCourse === id}
-                        onChange={() => setSelectedCourse(id)}
+                        onChange={() => {
+                          handleCourseSelection(id);
+                        }}
                         style={{
                           accentColor: "#49BBBD",
                           width: 18,
@@ -266,6 +410,19 @@ export default function CoursesPage() {
                               : NonITcourses)[id].desc
                           }
                         </span>
+                        {selectedCategory === "NONIT" && (
+                          <span
+                            style={{
+                              display: "block",
+                              fontSize: "0.9em",
+                              color: "#ff5722",
+                              animation: "blinker 1.5s linear infinite",
+                            }}
+                          >
+                            Duration: {NonITcourses[id].duration} | Fee: ₹
+                            {NonITcourses[id].fee}
+                          </span>
+                        )}
                       </div>
                     </label>
                   ))}
@@ -315,6 +472,55 @@ export default function CoursesPage() {
                 <p>• Exclusive learning material</p>
                 <p>• No ads, smooth playback</p>
                 <p>• Structured lessons</p>
+                <p
+                  style={{
+                    fontWeight: "bold",
+                    color: "#ff5722",
+                    animation: "blinker 1.5s linear infinite",
+                  }}
+                >
+                  Duration: {ITcourses[selectedCourse].duration}
+                </p>
+                <table
+                  style={{
+                    width: "100%",
+                    marginTop: "16px",
+                    borderCollapse: "collapse",
+                  }}
+                >
+                  <thead>
+                    <tr>
+                      <th
+                        style={{
+                          border: "1px solid #ddd",
+                          padding: "8px",
+                          backgroundColor: "#f2f2f2",
+                        }}
+                      >
+                        Actual Amount
+                      </th>
+                      <th
+                        style={{
+                          border: "1px solid #ddd",
+                          padding: "8px",
+                          backgroundColor: "#f2f2f2",
+                        }}
+                      >
+                        Scholarship Amount
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                        ₹{ITcourses[selectedCourse].actualAmount}
+                      </td>
+                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                        ₹{ITcourses[selectedCourse].scholarshipAmount}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </>
             ) : selectedCategory === "NONIT" ? (
               <>
@@ -332,6 +538,20 @@ export default function CoursesPage() {
             >
               <img src={personImg} alt="person" className="personImage" />
             </div>
+
+            {/* Back Button */}
+            <div className="back-button-container">
+              <button
+                className="back-button"
+                onClick={() => {
+                  setSelectedCategory(null);
+                  setSelectedCourse(null);
+                  setSelectedType(null);
+                }}
+              >
+                Back
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -342,6 +562,14 @@ export default function CoursesPage() {
         <p>Welcome to the live session!</p>
         {/* Add live session content here */}
       </div>
+
+      <style>
+        @keyframes blinker{" "}
+        {50 %
+          {
+            opacity: 0,
+          }}
+      </style>
     </>
   );
 }

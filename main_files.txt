@@ -1,0 +1,167 @@
+.gitignore
+CNAME
+README.md
+config/env.js
+config/getHttpsConfig.js
+config/jest/babelTransform.js
+config/jest/cssTransform.js
+config/jest/fileTransform.js
+config/modules.js
+config/paths.js
+config/webpack.config.js
+config/webpack/persistentCache/createEnvironmentHash.js
+config/webpackDevServer.config.js
+package-lock.json
+package.json
+postcss.config.js
+public/favicon.ico
+public/images/Accenture-Emblem.png
+public/images/Amazon logo.png
+public/images/Cognizant-Logo.png
+public/images/Flipkart Logo.png
+public/images/Group.png
+public/images/L&T Logo.png
+public/images/Microsoft-Logo.png
+public/images/Mindtree Logo.png
+public/images/Paytm-Logo.png
+public/images/Wipro logo.png
+public/images/dp.png
+public/images/hcl.png
+public/images/infosys.png
+public/images/iq.png
+public/images/logo.png
+public/images/placement.png
+public/images/tcs.png
+public/images/techmahindra.png
+public/index.html
+public/logo192.png
+public/logo512.png
+public/manifest.json
+public/robots.txt
+scripts/build.js
+scripts/start.js
+scripts/test.js
+src/App.css
+src/App.js
+src/App.test.js
+src/assets/Accenture-Emblem.png
+src/assets/Amazon logo.png
+src/assets/Capgemini-Logo-700x394.jpg
+src/assets/Cognizant-Logo.png
+src/assets/Dell-Emblem.jpg
+src/assets/Flipkart Logo.png
+src/assets/Group.png
+src/assets/Hewlett-Packard-Logo.png
+src/assets/IBM Logo.jpg
+src/assets/L&T Logo.png
+src/assets/Mask Group.jpg
+src/assets/Microsoft-Logo.png
+src/assets/Mindtree Logo.png
+src/assets/Oracle-Logotipo.jpg
+src/assets/Wipro logo.png
+src/assets/download.png
+src/assets/dp.png
+src/assets/google-logo.jpg
+src/assets/hcl.png
+src/assets/image.png
+src/assets/infosys.png
+src/assets/internship-assets/582fb6b58c98dbc1172a29af039574aa4474e76c (1).png
+src/assets/internship-assets/59e91cde877aacb096082025aaa7528e15f2789e.png
+src/assets/internship-assets/7a9ffcf752486682afd2d74121b8b52220dfad46.jpg
+src/assets/internship-assets/836cada1799d97b2db61d18978a8e2777c3ea682.png
+src/assets/internship-assets/ChalkboardTeacher.jpg
+src/assets/internship-assets/a6a75cf5ca47b6a4fceb75f355da0105034713c7.png
+src/assets/internship-assets/aiml.jpeg
+src/assets/internship-assets/bg.png
+src/assets/internship-assets/d3a37060c6bccc34fd4e6485ccd099c8b1eb1165 (1).png
+src/assets/internship-assets/d3a37060c6bccc34fd4e6485ccd099c8b1eb1165.png
+src/assets/internship-assets/datascience.jpeg
+src/assets/internship-assets/e7df45a52348b45d3a7df3da7291cfb46a2634b1.jpg
+src/assets/internship-assets/html.png
+src/assets/internship-assets/py.jpeg
+src/assets/internship-assets/python.png
+src/assets/iq.png
+src/assets/live.mp4
+src/assets/logo.png
+src/assets/person.png
+src/assets/placement.png
+src/assets/prointern logo.jpg
+src/assets/prointern.jpg
+src/assets/stevan.jpg
+src/assets/tcs.png
+src/assets/tech-circle.png
+src/assets/techmahindra.png
+src/assets/zomato-logo.png
+src/components/Navbar.css
+src/components/Navbar.jsx
+src/components/ProtectedRoute.jsx
+src/components/ToastMessage.js
+src/components/certificate_generator/app.css
+src/components/certificate_generator/app.js
+src/index.css
+src/index.js
+src/logo.svg
+src/pages/AdminReport.jsx
+src/pages/Careers.js
+src/pages/Certification.js
+src/pages/CompetitiveExam.js
+src/pages/CoursePaid.jsx
+src/pages/CourseUnpaid.jsx
+src/pages/Courses.jsx
+src/pages/CoursesPage.css
+src/pages/HomePage.css
+src/pages/MockTestPage.js
+src/pages/PaidCourses.css
+src/pages/PlacementAssistance.css
+src/pages/PlacementAssistance.js
+src/pages/PracticePage.js
+src/pages/PrivacyPolicy.js
+src/pages/ProinternQuiz.css
+src/pages/Questions.jsx
+src/pages/RecruiterForm.jsx
+src/pages/ResetPassword.js
+src/pages/Signup.js
+src/pages/Taskscreen.jsx
+src/pages/Termsandconditions.js
+src/pages/UnpaidCourses.css
+src/pages/VerifyEmail.js
+src/pages/admin/CompetetiveAdmin.jsx
+src/pages/admin/CoursesAdmin.css
+src/pages/admin/CoursesAdmin.jsx
+src/pages/admin/InternshipAdmin.css
+src/pages/admin/InternshipAdmin.jsx
+src/pages/admin/PlacementAdmin.css
+src/pages/admin/PlacementAdmin.jsx
+src/pages/assets/100-placement-assistance-small.png
+src/pages/assets/BuisnessMan.png
+src/pages/assets/Certificate Background Image.jpg
+src/pages/assets/CertificateNew.png
+src/pages/assets/CertificateNew2.jpg
+src/pages/assets/Ellipse.png
+src/pages/assets/bookgirl.png
+src/pages/assets/boy.png
+src/pages/assets/girl.png
+src/pages/assets/internship.png
+src/pages/assets/java.png
+src/pages/assets/logo.png
+src/pages/assets/logout.png
+src/pages/assets/ml.png
+src/pages/assets/notification.png
+src/pages/assets/placement.png
+src/pages/assets/profile.png
+src/pages/assets/public/IQ Test (3).jpeg
+src/pages/assets/review.png
+src/pages/assets/stats.png
+src/pages/assets/training.png
+src/pages/home.js
+src/pages/internship/hero.jsx
+src/pages/internship/internship.css
+src/pages/internship/internship.jsx
+src/pages/internship/nav.css
+src/pages/internship/nav.jsx
+src/pages/login.js
+src/pages/style.css
+src/pages/tbutton.js
+src/reportWebVitals.js
+src/setupTests.js
+tailwind.config.js

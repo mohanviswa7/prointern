@@ -1,0 +1,75 @@
+.gitignore
+CNAME
+asset-manifest.json
+favicon.ico
+images/Accenture-Emblem.png
+images/Amazon logo.png
+images/Cognizant-Logo.png
+images/Flipkart Logo.png
+images/Group.png
+images/L&T Logo.png
+images/Microsoft-Logo.png
+images/Mindtree Logo.png
+images/Paytm-Logo.png
+images/Wipro logo.png
+images/dp.png
+images/hcl.png
+images/infosys.png
+images/iq.png
+images/logo.png
+images/placement.png
+images/tcs.png
+images/techmahindra.png
+index.html
+logo192.png
+logo512.png
+manifest.json
+robots.txt
+static/css/main.0133f553.css
+static/css/main.0133f553.css.map
+static/js/239.3bb8543c.chunk.js
+static/js/239.3bb8543c.chunk.js.LICENSE.txt
+static/js/239.3bb8543c.chunk.js.map
+static/js/453.ba3d67fe.chunk.js
+static/js/453.ba3d67fe.chunk.js.map
+static/js/455.502028f7.chunk.js
+static/js/455.502028f7.chunk.js.map
+static/js/977.667b5867.chunk.js
+static/js/977.667b5867.chunk.js.LICENSE.txt
+static/js/977.667b5867.chunk.js.map
+static/js/main.0fba6ce7.js
+static/js/main.0fba6ce7.js.LICENSE.txt
+static/js/main.0fba6ce7.js.map
+static/media/100-placement-assistance-small.f770c985a03bbbf56344.png
+static/media/Accenture-Emblem.af6e73f7dc1d7af847c9.png
+static/media/Amazon logo.11f2a0a408985b12d23f.png
+static/media/BuisnessMan.32728c3fe52dbd6f3809.png
+static/media/Capgemini-Logo-700x394.17bebf29e2177a6eaf75.jpg
+static/media/CertificateNew2.6ee1bb278e0088a50684.jpg
+static/media/Cognizant-Logo.4fa1b6dd97fba5539c9e.png
+static/media/Dell-Emblem.5a25e0e723d7283cd658.jpg
+static/media/Flipkart Logo.475493b4a66d3cc2a35e.png
+static/media/Hewlett-Packard-Logo.ced1e9b5419e7cafefe9.png
+static/media/IBM Logo.aa6c578920e6fc319e08.jpg
+static/media/L&T Logo.a9b37e9d55f9142a10e8.png
+static/media/Mask Group.2c8e2f39a4a7bf4f3d53.jpg
+static/media/Microsoft-Logo.c8535d0475d866894dfd.png
+static/media/Mindtree Logo.bd68bcae2e14822bcb96.png
+static/media/Oracle-Logotipo.ee4297a733fe7547a3c7.jpg
+static/media/Wipro logo.934ae34919a98b566c82.png
+static/media/bg.5c703487b905db6214bd.png
+static/media/download.9d556c5101cec4c66eea.png
+static/media/dp.7cffacfdf61c00646193.png
+static/media/google-logo.8137610e65988729e6ab.jpg
+static/media/hcl.333c07ba150a8cf64e5d.png
+static/media/image.f60e8e2b3eb57d5b34d4.png
+static/media/infosys.f6c32700c65b4c4f2da7.png
+static/media/live.ffe323869943e3fc93a7.mp4
+static/media/logo.7ed4f114c0a2d1d34b69.png
+static/media/person.6c92f1f3cfe682f5f6d6.png
+static/media/prointern logo.c9f35cf7a90a64531327.jpg
+static/media/prointern.9559a8d7fb609d4093e8.jpg
+static/media/tcs.0fba4201a7a91797e97c.png
+static/media/tech-circle.6a12967da5af8d6813a9.png
+static/media/techmahindra.3968518c1debf6a19ac4.png
+static/media/zomato-logo.d3313551a873ba0ae7e7.png

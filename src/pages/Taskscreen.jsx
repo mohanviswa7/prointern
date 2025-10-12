@@ -11,6 +11,9 @@ const InternshipWorkflow = () => {
   const navigate = useNavigate();
   const [showRecruiterForm, setShowRecruiterForm] = useState(false);
   const [isPaid, setIsPaid] = useState(false); // State to track payment status
+  const [selectedCourse, setSelectedCourse] = useState("Course A"); // Default course
+  const [enteredMobileNumber, setEnteredMobileNumber] = useState("");
+  const [amount, setAmount] = useState(3000); // Default amount in INR
 
   const tasks = [
     {
@@ -331,16 +334,57 @@ const InternshipWorkflow = () => {
   };
 
   const handlePayment = () => {
-    // Open Razorpay payment URL in a new window
-    const paymentWindow = window.open("https://rzp.io/rzp/xx2PZNQK", "_blank");
-    if (paymentWindow) {
-      paymentWindow.focus();
-    } else {
-      toast.error(
-        "Unable to open payment gateway. Please check your browser settings."
-      );
+    const selectedCourses = [];
+    document
+      .querySelectorAll('.courses-list input[type="checkbox"]:checked')
+      .forEach((checkbox) => {
+        selectedCourses.push(
+          checkbox.nextElementSibling.querySelector("h3").innerText
+        );
+      });
+
+    if (selectedCourses.length === 0) {
+      toast.error("Please select at least one course.");
+      return;
     }
+
+    const enteredMobileNumber = prompt("Please enter your mobile number:");
+    if (!enteredMobileNumber || !/^[0-9]{10}$/.test(enteredMobileNumber)) {
+      toast.error("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+
+    const options = {
+      key: "rzp_live_RR3GHL1TJu3MZw", // Razorpay live API key
+      amount: amount * 100, // Convert entered amount to paise
+      currency: "INR",
+      name: selectedCourses.join(", "), // Dynamically set the selected course names
+      description: "Course Payment",
+      handler: function (response) {
+        // Navigate to Taskscreen after payment success
+        setIsPaid(true);
+        toast.success("Payment successful! Tasks unlocked.");
+      },
+      prefill: {
+        name: "Your Name",
+        email: "your.email@example.com",
+        contact: enteredMobileNumber, // Dynamically set the mobile number
+      },
+      theme: {
+        color: "#49BBBD",
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
   };
+
+  // Dummy courses data
+  const courses = [
+    { name: "Course A", duration: "3 months", fee: 15000 },
+    { name: "Course B", duration: "6 months", fee: 30000 },
+    { name: "Course C", duration: "1 year", fee: 60000 },
+  ];
 
   return (
     <div
@@ -377,338 +421,622 @@ const InternshipWorkflow = () => {
       {showRecruiterForm ? (
         <RecruiterForm />
       ) : !isPaid ? (
-        <div style={{ textAlign: "center", marginTop: "50px" }}>
-          <h2 style={{ color: "#FFD700" }}>Payment Required</h2>
-          <p style={{ color: "#d4edda" }}>
-            Please complete the payment to unlock tasks.
-          </p>
-          <button
-            onClick={handlePayment}
+        <div style={{ display: "flex", gap: "20px" }}>
+          <div
+            className="courses-list"
             style={{
-              padding: "10px 20px",
-              borderRadius: "8px",
-              border: "none",
-              background: "#49BBBD",
-              color: "#fff",
-              cursor: "pointer",
-              fontWeight: "600",
+              flex: "1",
+              padding: "20px",
+              backgroundColor: "#f9f9f9",
+              borderRadius: "10px",
             }}
           >
-            Pay Now
-          </button>
+            <h2 style={{ color: "#ff6600", textAlign: "center" }}>
+              NONIT Courses
+            </h2>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+              <div
+                style={{
+                  backgroundColor: "#fff",
+                  borderRadius: "10px",
+                  padding: "20px",
+                  boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+                  flex: "1",
+                  minWidth: "200px",
+                  color: "#000",
+                }}
+              >
+                <input type="checkbox" id="human-resources" />
+                <label htmlFor="human-resources" style={{ marginLeft: "10px" }}>
+                  <h3>Human Resources</h3>
+                  <p>Learn HR & people management</p>
+                </label>
+              </div>
+              <div
+                style={{
+                  backgroundColor: "#fff",
+                  borderRadius: "10px",
+                  padding: "20px",
+                  boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+                  flex: "1",
+                  minWidth: "200px",
+                  color: "#000",
+                }}
+              >
+                <input type="checkbox" id="event-management" />
+                <label
+                  htmlFor="event-management"
+                  style={{ marginLeft: "10px" }}
+                >
+                  <h3>Event Management</h3>
+                  <p>Learn corporate finance essentials</p>
+                </label>
+              </div>
+              <div
+                style={{
+                  backgroundColor: "#fff",
+                  borderRadius: "10px",
+                  padding: "20px",
+                  boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+                  flex: "1",
+                  minWidth: "200px",
+                  color: "#000",
+                }}
+              >
+                <input type="checkbox" id="sales-marketing" />
+                <label htmlFor="sales-marketing" style={{ marginLeft: "10px" }}>
+                  <h3>Sales & Marketing</h3>
+                  <p>Master sales strategies & growth</p>
+                </label>
+              </div>
+              <div
+                style={{
+                  backgroundColor: "#fff",
+                  borderRadius: "10px",
+                  padding: "20px",
+                  boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+                  flex: "1",
+                  minWidth: "200px",
+                  color: "#000",
+                }}
+              >
+                <input type="checkbox" id="graphic-design" />
+                <label htmlFor="graphic-design" style={{ marginLeft: "10px" }}>
+                  <h3>Graphic Design</h3>
+                  <p>Basics of creative design tools</p>
+                </label>
+              </div>
+              <div
+                style={{
+                  backgroundColor: "#fff",
+                  borderRadius: "10px",
+                  padding: "20px",
+                  boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+                  flex: "1",
+                  minWidth: "200px",
+                  color: "#000",
+                }}
+              >
+                <input type="checkbox" id="business-development" />
+                <label
+                  htmlFor="business-development"
+                  style={{ marginLeft: "10px" }}
+                >
+                  <h3>Business Development</h3>
+                  <p>Basics of creative design tools</p>
+                </label>
+              </div>
+            </div>
+            <p
+              style={{
+                textAlign: "center",
+                color: "#ff6600",
+                fontWeight: "bold",
+                animation: "blink 1s infinite",
+              }}
+            >
+              For Non IT Internship: ₹3000 for all courses, Duration: 2 months
+            </p>
+            <style>
+              {`
+                @keyframes blink {
+                  0%, 100% { opacity: 1; }
+                  50% { opacity: 0; }
+                }
+              `}
+            </style>
+          </div>
+          <div
+            style={{
+              flex: "1",
+              textAlign: "center",
+              padding: "20px",
+              backgroundColor: "#2e75c7",
+              borderRadius: "10px",
+              color: "#fff",
+            }}
+          >
+            <h2 style={{ color: "#FFD700" }}>Payment Required</h2>
+            <p style={{ color: "#d4edda" }}>
+              Please complete the payment to unlock tasks.
+            </p>
+            <button
+              onClick={handlePayment}
+              style={{
+                padding: "10px 20px",
+                borderRadius: "8px",
+                border: "none",
+                background: "#49BBBD",
+                color: "#fff",
+                cursor: "pointer",
+                fontWeight: "600",
+              }}
+            >
+              Pay Now
+            </button>
+          </div>
         </div>
       ) : (
         <>
-          <h1
-            style={{
-              textAlign: "center",
-              marginBottom: "20px",
-              color: "#FFD700",
-              fontSize: "2.5rem",
-              textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-            }}
-          >
-            Internship Workflow
-          </h1>
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "#1a457f",
-              padding: "10px 20px",
-              borderRadius: "10px",
-              marginBottom: "30px",
-              boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
-            }}
-          >
-            <span style={{ marginRight: "10px", fontSize: "1.5rem" }}>💡</span>
-            <p style={{ margin: 0, fontSize: "1rem", color: "#d4edda" }}>
-              Note: Without completion of tasks, stipend will not be provided.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "20px",
-            }}
-          >
-            {/* Grouped Task Cards */}
+          <div className="taskscreen-container" style={{ display: "flex" }}>
             <div
+              className="courses-list"
               style={{
-                background: "#1a457f",
+                flex: "1",
                 padding: "20px",
-                borderRadius: "15px",
-                boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
+                backgroundColor: "#f9f9f9",
               }}
             >
-              <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-                Tasks Overview
+              <h2 style={{ color: "#ff6600", textAlign: "center" }}>
+                NONIT Courses
               </h2>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "20px",
-                  flexWrap: "wrap",
-                }}
-              >
-                {tasks.map((task, index) => {
-                  const isEnabled = isTaskUnlocked(task.key, index);
-                  const isCompleted = completedTasks.includes(task.key);
-
-                  return (
-                    <motion.div
-                      key={task.key}
-                      whileHover={{ scale: isEnabled ? 1.05 : 1 }}
-                      style={{
-                        background: isCompleted ? "#49BBBD" : "#1a457f",
-                        opacity: isEnabled ? 1 : 0.5,
-                        cursor: isEnabled ? "pointer" : "not-allowed",
-                        padding: "20px",
-                        borderRadius: "15px",
-                        width: "220px",
-                        textAlign: "center",
-                        boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
-                        position: "relative",
-                        transition: "all 0.3s ease",
-                        color: "#fff",
-                      }}
-                      title={
-                        !isEnabled
-                          ? "First task is not completed. You are not eligible for this task."
-                          : ""
-                      }
-                    >
-                      <div style={{ marginBottom: "10px", color: "#fff" }}>
-                        {task.icon}
-                      </div>
-                      <h3 style={{ marginBottom: "10px" }}>{task.title}</h3>
-                      <p style={{ marginBottom: "15px" }}>
-                        Duration: {task.durationDays}{" "}
-                        {task.durationDays > 1 ? "days" : "day"}
-                      </p>
-                      {task.objective && (
-                        <p style={{ marginBottom: "10px", fontSize: "0.9rem" }}>
-                          <strong>Objective:</strong> {task.objective}
-                        </p>
-                      )}
-                      {task.eligibility && (
-                        <p
-                          style={{
-                            marginBottom: "15px",
-                            fontSize: "0.9rem",
-                            color: "#ffdddd",
-                          }}
-                        >
-                          <strong>Eligibility for Next Task:</strong>{" "}
-                          {task.eligibility}
-                        </p>
-                      )}
-
-                      <button
-                        onClick={() => setShowRecruiterForm(true)}
-                        style={{
-                          display: "block",
-                          marginBottom: "10px",
-                          color: "#d4edda",
-                          textDecoration: "underline",
-                          cursor: "pointer",
-                          background: "none",
-                          border: "none",
-                        }}
-                      >
-                        Submit Candidate Details
-                      </button>
-
-                      <button
-                        onClick={() => playVideo(videoNotes[task.key])}
-                        style={{
-                          padding: "5px 10px",
-                          borderRadius: "5px",
-                          border: "none",
-                          background: "#49BBBD",
-                          color: "#fff",
-                          fontWeight: "600",
-                          cursor: "pointer",
-                          marginBottom: "10px",
-                        }}
-                      >
-                        🎥 Play Video Note
-                      </button>
-
-                      {isCompleted && (
-                        <p
-                          style={{
-                            color: "#d4edda",
-                            fontWeight: "600",
-                            marginTop: "10px",
-                          }}
-                        >
-                          ✅ Completed
-                        </p>
-                      )}
-                    </motion.div>
-                  );
-                })}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+                <div
+                  style={{
+                    backgroundColor: "#fff",
+                    borderRadius: "10px",
+                    padding: "20px",
+                    boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+                    flex: "1",
+                    minWidth: "200px",
+                    color: "#000",
+                  }}
+                >
+                  <h3>Human Resources</h3>
+                  <p>Learn HR & people management</p>
+                </div>
+                <div
+                  style={{
+                    backgroundColor: "#fff",
+                    borderRadius: "10px",
+                    padding: "20px",
+                    boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+                    flex: "1",
+                    minWidth: "200px",
+                    color: "#000",
+                  }}
+                >
+                  <h3>Event Management</h3>
+                  <p>Learn corporate finance essentials</p>
+                </div>
+                <div
+                  style={{
+                    backgroundColor: "#fff",
+                    borderRadius: "10px",
+                    padding: "20px",
+                    boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+                    flex: "1",
+                    minWidth: "200px",
+                    color: "#000",
+                  }}
+                >
+                  <h3>Sales & Marketing</h3>
+                  <p>Master sales strategies & growth</p>
+                </div>
+                <div
+                  style={{
+                    backgroundColor: "#fff",
+                    borderRadius: "10px",
+                    padding: "20px",
+                    boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+                    flex: "1",
+                    minWidth: "200px",
+                    color: "#000",
+                  }}
+                >
+                  <h3>Graphic Design</h3>
+                  <p>Basics of creative design tools</p>
+                </div>
+                <div
+                  style={{
+                    backgroundColor: "#fff",
+                    borderRadius: "10px",
+                    padding: "20px",
+                    boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+                    flex: "1",
+                    minWidth: "200px",
+                    color: "#000",
+                  }}
+                >
+                  <h3>Business Development</h3>
+                  <p>Basics of creative design tools</p>
+                </div>
               </div>
             </div>
-
-            {/* Terms and Conditions Card */}
             <div
-              style={{
-                background: "#1a457f",
-                padding: "20px",
-                borderRadius: "15px",
-                boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
-              }}
+              className="task-content"
+              style={{ flex: "2", padding: "20px" }}
             >
-              <h2
+              <h1
                 style={{
                   textAlign: "center",
                   marginBottom: "20px",
                   color: "#FFD700",
-                  textShadow: "1px 1px 3px rgba(0, 0, 0, 0.5)",
+                  fontSize: "2.5rem",
+                  textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
                 }}
               >
-                Terms and Conditions
-              </h2>
+                Internship Workflow
+              </h1>
+
               <div
                 style={{
-                  textAlign: "left",
-                  color: "#d4edda",
-                  lineHeight: "1.8",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "#1a457f",
+                  padding: "10px 20px",
+                  borderRadius: "10px",
+                  marginBottom: "30px",
+                  boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
                 }}
               >
-                <h3 style={{ color: "#FFD700" }}>1. Course Enrollment:</h3>
-                <ul>
-                  <li>
-                    Enrollment in any course is subject to approval by
-                    Prointern.
-                  </li>
-                  <li>
-                    All course fees must be paid in full prior to the
-                    commencement of the course unless otherwise agreed.
-                  </li>
-                  <li>
-                    Prointern reserves the right to refuse enrollment or cancel
-                    courses at its discretion.
-                  </li>
-                </ul>
+                <span style={{ marginRight: "10px", fontSize: "1.5rem" }}>
+                  💡
+                </span>
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: "1rem",
+                    color: "#d4edda",
+                  }}
+                >
+                  Note: Without completion of tasks, stipend will not be
+                  provided.
+                </p>
+              </div>
 
-                <h3 style={{ color: "#FFD700" }}>2. Payment and Refunds:</h3>
-                <ul>
-                  <li>
-                    Course fees are non-refundable except in cases where
-                    Prointern cancels the course.
-                  </li>
-                  <li>
-                    Any request for a refund must be submitted in writing.
-                  </li>
-                  <li>
-                    Payment can be made through authorized payment channels
-                    specified by Prointern.
-                  </li>
-                </ul>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "20px",
+                }}
+              >
+                {/* Grouped Task Cards */}
+                <div
+                  style={{
+                    background: "#1a457f",
+                    padding: "20px",
+                    borderRadius: "15px",
+                    boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+                    Tasks Overview
+                  </h2>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      gap: "20px",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {tasks.map((task, index) => {
+                      const isEnabled = isTaskUnlocked(task.key, index);
+                      const isCompleted = completedTasks.includes(task.key);
 
-                <h3 style={{ color: "#FFD700" }}>
-                  3. Attendance and Participation:
-                </h3>
-                <ul>
-                  <li>
-                    Students are expected to attend all classes and actively
-                    participate.
-                  </li>
-                  <li>
-                    Prointern may remove students from a course for disruptive
-                    behavior or non-compliance with rules.
-                  </li>
-                </ul>
+                      return (
+                        <motion.div
+                          key={task.key}
+                          whileHover={{ scale: isEnabled ? 1.05 : 1 }}
+                          style={{
+                            background: isCompleted ? "#49BBBD" : "#1a457f",
+                            opacity: isEnabled ? 1 : 0.5,
+                            cursor: isEnabled ? "pointer" : "not-allowed",
+                            padding: "20px",
+                            borderRadius: "15px",
+                            width: "220px",
+                            textAlign: "center",
+                            boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
+                            position: "relative",
+                            transition: "all 0.3s ease",
+                            color: "#fff",
+                          }}
+                          title={
+                            !isEnabled
+                              ? "First task is not completed. You are not eligible for this task."
+                              : ""
+                          }
+                        >
+                          <div style={{ marginBottom: "10px", color: "#fff" }}>
+                            {task.icon}
+                          </div>
+                          <h3 style={{ marginBottom: "10px" }}>{task.title}</h3>
+                          <p style={{ marginBottom: "15px" }}>
+                            Duration: {task.durationDays}{" "}
+                            {task.durationDays > 1 ? "days" : "day"}
+                          </p>
+                          {task.objective && (
+                            <p
+                              style={{
+                                marginBottom: "10px",
+                                fontSize: "0.9rem",
+                              }}
+                            >
+                              <strong>Objective:</strong> {task.objective}
+                            </p>
+                          )}
+                          {task.eligibility && (
+                            <p
+                              style={{
+                                marginBottom: "15px",
+                                fontSize: "0.9rem",
+                                color: "#ffdddd",
+                              }}
+                            >
+                              <strong>Eligibility for Next Task:</strong>{" "}
+                              {task.eligibility}
+                            </p>
+                          )}
 
-                <h3 style={{ color: "#FFD700" }}>4. Intellectual Property:</h3>
-                <ul>
-                  <li>
-                    All content, materials, and resources provided by Prointern
-                    are protected under copyright laws.
-                  </li>
-                  <li>
-                    Students are prohibited from reproducing, sharing, or
-                    distributing course content without explicit permission.
-                  </li>
-                </ul>
+                          <button
+                            onClick={() => setShowRecruiterForm(true)}
+                            style={{
+                              display: "block",
+                              marginBottom: "10px",
+                              color: "#d4edda",
+                              textDecoration: "underline",
+                              cursor: "pointer",
+                              background: "none",
+                              border: "none",
+                            }}
+                          >
+                            Submit Candidate Details
+                          </button>
 
-                <h3 style={{ color: "#FFD700" }}>5. Code of Conduct:</h3>
-                <ul>
-                  <li>
-                    Respectful behavior towards instructors, staff, and fellow
-                    students is required.
-                  </li>
-                  <li>
-                    Harassment, discrimination, or offensive behavior will not
-                    be tolerated.
-                  </li>
-                </ul>
+                          <button
+                            onClick={() => playVideo(videoNotes[task.key])}
+                            style={{
+                              padding: "5px 10px",
+                              borderRadius: "5px",
+                              border: "none",
+                              background: "#49BBBD",
+                              color: "#fff",
+                              fontWeight: "600",
+                              cursor: "pointer",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            🎥 Play Video Note
+                          </button>
 
-                <h3 style={{ color: "#FFD700" }}>6. Liability:</h3>
-                <ul>
-                  <li>
-                    Prointern is not responsible for any personal loss, damage,
-                    or injury incurred during participation in courses or
-                    events.
-                  </li>
-                  <li>Students participate at their own risk.</li>
-                </ul>
+                          {isCompleted && (
+                            <p
+                              style={{
+                                color: "#d4edda",
+                                fontWeight: "600",
+                                marginTop: "10px",
+                              }}
+                            >
+                              ✅ Completed
+                            </p>
+                          )}
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
 
-                <h3 style={{ color: "#FFD700" }}>7. Privacy:</h3>
-                <ul>
-                  <li>
-                    Prointern respects your privacy. Any personal data collected
-                    will be used in accordance with our Privacy Policy.
-                  </li>
-                  <li>
-                    Students consent to the collection and use of their data for
-                    course administration and communication purposes.
-                  </li>
-                </ul>
+                {/* Terms and Conditions Card */}
+                <div
+                  style={{
+                    background: "#1a457f",
+                    padding: "20px",
+                    borderRadius: "15px",
+                    boxShadow: "0px 6px 18px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  <h2
+                    style={{
+                      textAlign: "center",
+                      marginBottom: "20px",
+                      color: "#FFD700",
+                      textShadow: "1px 1px 3px rgba(0, 0, 0, 0.5)",
+                    }}
+                  >
+                    Terms and Conditions
+                  </h2>
+                  <div
+                    style={{
+                      textAlign: "left",
+                      color: "#d4edda",
+                      lineHeight: "1.8",
+                    }}
+                  >
+                    <h3 style={{ color: "#FFD700" }}>1. Course Enrollment:</h3>
+                    <ul>
+                      <li>
+                        Enrollment in any course is subject to approval by
+                        Prointern.
+                      </li>
+                      <li>
+                        All course fees must be paid in full prior to the
+                        commencement of the course unless otherwise agreed.
+                      </li>
+                      <li>
+                        Prointern reserves the right to refuse enrollment or
+                        cancel courses at its discretion.
+                      </li>
+                    </ul>
 
-                <h3 style={{ color: "#FFD700" }}>
-                  8. Course Changes and Cancellation:
-                </h3>
-                <ul>
-                  <li>
-                    Prointern reserves the right to modify course content,
-                    schedule, or instructors at any time.
-                  </li>
-                  <li>
-                    In the event of course cancellation, students will be
-                    notified and provided with options for rescheduling or
-                    refunds.
-                  </li>
-                </ul>
+                    <h3 style={{ color: "#FFD700" }}>
+                      2. Payment and Refunds:
+                    </h3>
+                    <ul>
+                      <li>
+                        Course fees are non-refundable except in cases where
+                        Prointern cancels the course.
+                      </li>
+                      <li>
+                        Any request for a refund must be submitted in writing.
+                      </li>
+                      <li>
+                        Payment can be made through authorized payment channels
+                        specified by Prointern.
+                      </li>
+                    </ul>
 
-                <h3 style={{ color: "#FFD700" }}>9. Dispute Resolution:</h3>
-                <ul>
-                  <li>
-                    Any disputes arising out of the terms and conditions shall
-                    be resolved amicably.
-                  </li>
-                  <li>
-                    If unresolved, disputes will be subject to the jurisdiction
-                    of local courts.
-                  </li>
-                </ul>
+                    <h3 style={{ color: "#FFD700" }}>
+                      3. Attendance and Participation:
+                    </h3>
+                    <ul>
+                      <li>
+                        Students are expected to attend all classes and actively
+                        participate.
+                      </li>
+                      <li>
+                        Prointern may remove students from a course for
+                        disruptive behavior or non-compliance with rules.
+                      </li>
+                    </ul>
 
-                <h3 style={{ color: "#FFD700" }}>10. Acceptance of Terms:</h3>
-                <ul>
-                  <li>
-                    By enrolling in any Prointern course, you acknowledge that
-                    you have read, understood, and agree to these Terms and
-                    Conditions.
-                  </li>
-                </ul>
+                    <h3 style={{ color: "#FFD700" }}>
+                      4. Intellectual Property:
+                    </h3>
+                    <ul>
+                      <li>
+                        All content, materials, and resources provided by
+                        Prointern are protected under copyright laws.
+                      </li>
+                      <li>
+                        Students are prohibited from reproducing, sharing, or
+                        distributing course content without explicit permission.
+                      </li>
+                    </ul>
+
+                    <h3 style={{ color: "#FFD700" }}>5. Code of Conduct:</h3>
+                    <ul>
+                      <li>
+                        Respectful behavior towards instructors, staff, and
+                        fellow students is required.
+                      </li>
+                      <li>
+                        Harassment, discrimination, or offensive behavior will
+                        not be tolerated.
+                      </li>
+                    </ul>
+
+                    <h3 style={{ color: "#FFD700" }}>6. Liability:</h3>
+                    <ul>
+                      <li>
+                        Prointern is not responsible for any personal loss,
+                        damage, or injury incurred during participation in
+                        courses or events.
+                      </li>
+                      <li>Students participate at their own risk.</li>
+                    </ul>
+
+                    <h3 style={{ color: "#FFD700" }}>7. Privacy:</h3>
+                    <ul>
+                      <li>
+                        Prointern respects your privacy. Any personal data
+                        collected will be used in accordance with our Privacy
+                        Policy.
+                      </li>
+                      <li>
+                        Students consent to the collection and use of their data
+                        for course administration and communication purposes.
+                      </li>
+                    </ul>
+
+                    <h3 style={{ color: "#FFD700" }}>
+                      8. Course Changes and Cancellation:
+                    </h3>
+                    <ul>
+                      <li>
+                        Prointern reserves the right to modify course content,
+                        schedule, or instructors at any time.
+                      </li>
+                      <li>
+                        In the event of course cancellation, students will be
+                        notified and provided with options for rescheduling or
+                        refunds.
+                      </li>
+                    </ul>
+
+                    <h3 style={{ color: "#FFD700" }}>9. Dispute Resolution:</h3>
+                    <ul>
+                      <li>
+                        Any disputes arising out of the terms and conditions
+                        shall be resolved amicably.
+                      </li>
+                      <li>
+                        If unresolved, disputes will be subject to the
+                        jurisdiction of local courts.
+                      </li>
+                    </ul>
+
+                    <h3 style={{ color: "#FFD700" }}>
+                      10. Acceptance of Terms:
+                    </h3>
+                    <ul>
+                      <li>
+                        By enrolling in any Prointern course, you acknowledge
+                        that you have read, understood, and agree to these Terms
+                        and Conditions.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Add Left and Right Side Layout */}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "20px",
+                    marginTop: "20px",
+                  }}
+                >
+                  {/* Left Side: Terms and Conditions */}
+                  <div
+                    style={{
+                      flex: 1,
+                      padding: "20px",
+                      background: "#1a457f",
+                      borderRadius: "10px",
+                      color: "#d4edda",
+                    }}
+                  >
+                    <h2 style={{ color: "#FFD700" }}>Terms and Conditions</h2>
+                    <p>{termsAndConditions}</p>
+                  </div>
+
+                  {/* Right Side: Stipend Message */}
+                  <div
+                    style={{
+                      flex: 1,
+                      padding: "20px",
+                      background: "#1a457f",
+                      borderRadius: "10px",
+                      color: "#d4edda",
+                    }}
+                  >
+                    <h2 style={{ color: "#FFD700" }}>Stipend Message</h2>
+                    <p>{stipendMessage}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
